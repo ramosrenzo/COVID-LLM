@@ -2,19 +2,18 @@
 
 ## Setup environment
 
-### create and activate virtual python environment
+Create and activate a virtual python environment:
 ```python
 conda create -n dnabert2 python=3.8
 conda activate dnabert2
 ```
 
-### install packages
+Install required packages:
 ```python
 python3 -m pip install -r requirements.txt
 ```
 
-### additional note
-Ensure that the `triton` package is uninstalled in your virtual environment.
+Please ensure that the `triton` package is uninstalled in your environment:
 ```python
 pip uninstall triton
 ``` 
