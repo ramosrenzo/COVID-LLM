@@ -1,6 +1,6 @@
 # DNABERT-2
 
-## Setup environment
+## Setup Environment
 
 Create and activate a virtual python environment:
 ```python
