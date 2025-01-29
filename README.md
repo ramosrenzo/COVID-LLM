@@ -20,7 +20,7 @@ pip uninstall triton
 
 ## Running Code
 
-**Note**: We recommend running DNABERT-2 with a GPU.
+**Note**: DNABERT-2 requires a GPU to run.
 
 To run the model on a simple test:
 
