@@ -97,7 +97,7 @@ class Classifier(K.Model):
 
 def run_model():
     #get data
-    fecal = pd.read_csv('fecal.tsv', sep='\t')
+    fecal = pd.read_csv('data/fecal.tsv', sep='\t')
 
     fecal_filtered = fecal[['sample_name', 'covid_positive']]
     
@@ -132,7 +132,7 @@ def run_model():
         return dataset
 
     gd = GeneratorDataset(
-        table='/home/swchan/DSC170/fecal.biom',
+        table='data/fecal.biom',
         metadata=fecal_filtered,
         metadata_column='has_covid',
         shuffle=False,
