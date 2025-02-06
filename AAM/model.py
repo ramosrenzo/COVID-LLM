@@ -132,12 +132,13 @@ def run_model():
         return dataset
 
     gd = GeneratorDataset(
-        table='data/fecal.biom',
-        metadata=fecal_filtered,
+        table='/home/swchan/DSC170/data/input/merged_biom_table.biom',
+        metadata='/home/swchan/DSC170/data/input/training_metadata.tsv',
         metadata_column='has_covid',
         shuffle=False,
         is_categorical=False,
         shift=0,
+        rarefy_depth = 5000,
         scale=1
     )
 
