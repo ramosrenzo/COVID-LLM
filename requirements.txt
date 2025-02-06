@@ -6,7 +6,8 @@ scipy
 statsmodels
 biopython
 pandas
-sentencepiece==0.1.91
+# pybedtools
+# sentencepiece==0.1.91
 
 einops==0.6.1
 transformers==4.29.2

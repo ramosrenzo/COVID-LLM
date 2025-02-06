@@ -1,10 +1,9 @@
-# DNABERT and DNABERT-2
+# Assessing LLMs to Improve the Prediction of COVID-19 Status
 ## Setup Environment
-
 Create and activate a virtual python environment:
 ```python
-conda create -n dnabert python=3.8
-conda activate dnabert
+conda create -n covid_llms python=3.8
+conda activate covid_llms
 ```
 
 Install required packages:
@@ -18,11 +17,18 @@ pip uninstall triton
 ``` 
 
 ## Run Model
+Note: DNABERT-2 requires a GPU to run.
 
-**Note**: DNABERT-2 requires a GPU to run.
-
-Run the model on a simple test:
-
+Run the build script with a target to run one or multiple models:
 ```python
-python run.py
+python run.py [target 1] [target 2]
 ```
+**Targets**
+
+`all`: runs all models.
+
+`dnabert`: runs DNABERT model.
+
+`dnabert-2`: runs DNABERT-2 model.
+
+`grover`: runs grover model.

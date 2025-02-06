@@ -29,7 +29,7 @@ def run_dnabert():
     print("DNABERT: Hidden states successfully loaded.")
 
     embedding_mean = torch.mean(hidden_states[0], dim=0)
-    print(f"DNABERT: Embeddings successfully loaded.")
+    print("DNABERT: Embeddings successfully loaded.")
 
     model_input = tokenizer.encode_plus(dna, add_special_tokens=True, max_length=512)["input_ids"]
     model_input = torch.tensor(model_input, dtype=torch.long).to(device)
@@ -37,4 +37,4 @@ def run_dnabert():
     
     output = model(model_input)
     print(output[1])
-    print(f"DNABERT: Complete.")
+    print("DNABERT: Completed.")

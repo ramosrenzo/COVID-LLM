@@ -48,4 +48,4 @@ def run_dnabert_2():
         embeddings_list.append(sample_embeddings)
     embeddings = torch.tensor(embeddings_list)
     print("DNABERT-2: Embeddings successfully loaded.")
-    print("DNABERT-2: Complete.")
+    print("DNABERT-2: Completed.")
