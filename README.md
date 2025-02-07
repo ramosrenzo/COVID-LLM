@@ -30,4 +30,4 @@ python run.py [target 1] [target 2]
 
 `dnabert-2`: runs DNABERT-2 model. Note that DNABERT-2 requires a GPU.
 
-`grover`: runs grover model.
+`grover`: runs GROVER model.
