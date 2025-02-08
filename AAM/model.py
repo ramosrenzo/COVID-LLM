@@ -139,7 +139,8 @@ def run_model():
         is_categorical=False,
         shift=0,
         rarefy_depth = 5000,
-        scale=1
+        scale=1,
+        batch_size=4
     )
 
     dataset = get_dataset(gd)
@@ -155,4 +156,4 @@ def run_model():
 
     model.compile(optimizer=optimizer, run_eagerly=False)
 
-    model.fit(dataset, epochs=1, steps_per_epoch=gd.steps_per_epoch)
+    model.fit(dataset, epochs=10, steps_per_epoch=gd.steps_per_epoch)
