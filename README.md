@@ -1,5 +1,7 @@
 # Assessing LLMs to Improve the Prediction of COVID-19 Status
 ## DNABERT, DNABERT-2, GROVER
+Note that DNABERT-2 will require a GPU to run.
+
 ### Setup Environment
 Create and activate a virtual python environment:
 ```python
@@ -18,21 +20,21 @@ pip uninstall triton
 ``` 
 
 ### Run Model
+Specify which model(s) to run with a target:
+
+`all` runs DNABERT, DNABERT-2, and GROVER.
+
+`dnabert` runs DNABERT model.
+
+`dnabert-2` runs DNABERT-2 model.
+
+`grover` runs GROVER model.
+<br />
+<br />
 Run the build script with one or multiple targets:
 ```python
 python run.py <target>
 ```
-
-**Targets**
-
-`all`: runs DNABERT, DNABERT-2, and GROVER. Note that DNABERT-2 requires a GPU.
-
-`dnabert`: runs DNABERT model.
-
-`dnabert-2`: runs DNABERT-2 model. Note that DNABERT-2 requires a GPU.
-
-`grover`: runs GROVER model.
-
 
 ## AAM
 
@@ -46,12 +48,12 @@ conda activate aam
 conda install -c conda-forge gxx_linux-64 hdf5 mkl-include lz4 hdf5-static libcblas liblapacke make
 ```
 
-Install AAM
+Install AAM:
 ```
 pip install git+https://github.com/kwcantrell/attention-all-microbes.git@s2s-updated
 ```
 
-#### Run Model
+### Run Model
 Run the build script:
 ```python
 python run_aam.py
