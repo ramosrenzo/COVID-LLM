@@ -1,7 +1,7 @@
 import sys
-from dnabert.model import run_dnabert
-from dnabert_2.model import run_dnabert_2
-from grover.model import run_grover
+from DNABERT.model import run_dnabert
+from DNABERT_2.model import run_dnabert_2
+from GROVER.model import run_grover
 
 if __name__ == "__main__":
     try:
