@@ -19,7 +19,7 @@ def run_dnabert():
 
     # initialize tokenizer and model
     config = BertConfig.from_pretrained('https://raw.githubusercontent.com/jerryji1993/DNABERT/master/src/transformers/dnabert-config/bert-config-6/config.json', trust_remote_code=True)
-    tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNA_bert_6")
+    tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNA_bert_6", trust_remote_code=True)
     model = AutoModel.from_pretrained("zhihan1996/DNA_bert_6", trust_remote_code=True, config=config).to(device)
     print("DNABERT: Model successfully loaded.")
 
