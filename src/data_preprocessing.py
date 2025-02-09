@@ -23,8 +23,8 @@ def get_sample_data(table):
     # dictionary to array
     model_input = [np.array(value) for key, value in asv_data.items()]
 
-    # return dataframe
-    input_df = pd.DataFrame({'ASVs': [row.tolist() for row in model_input]})
+    # return 
+    input_df = pd.DataFrame(model_input)
     input_df['sample'] = asv_data.keys()
     input_df = input_df.set_index('sample')
     return input_df
@@ -96,8 +96,11 @@ def preprocess_data():
     y_test = y_test.assign(has_covid = y_test['sample_sarscov2_screening_result'].apply(has_covid)).drop(columns=['sample_sarscov2_screening_result'])
     
     # to csv
-    X_train.assign(study_sample_type=y_train['study_sample_type']).reset_index(drop=True).to_csv('data/input/samples_X_train.csv', index=False)
-    X_test.assign(study_sample_type=y_test['study_sample_type']).reset_index(drop=True).to_csv('data/input/samples_X_test.csv', index=False)
+    X_train.insert(1, 'study_sample_type', y_train['study_sample_type'])
+    X_test.insert(1, 'study_sample_type', y_test['study_sample_type'])
+
+    X_train.reset_index(drop=True).to_csv('data/input/samples_X_train.csv', index=False)
+    X_test.reset_index(drop=True).to_csv('data/input/samples_X_test.csv', index=False)
     y_train.drop(columns=['study_sample_type']).reset_index(drop=True).to_csv('data/input/samples_y_train.csv', index=False)
     y_test.drop(columns=['study_sample_type']).reset_index(drop=True).to_csv('data/input/samples_y_test.csv', index=False)
     print('Data: DNABERT, DNABERT-2, and GROVER data preprocessing completed.')
