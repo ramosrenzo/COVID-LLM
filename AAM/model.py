@@ -132,8 +132,8 @@ def run_model():
         return dataset
 
     gd = GeneratorDataset(
-        table='/home/swchan/DSC170/data/input/merged_biom_table.biom',
-        metadata='/home/swchan/DSC170/data/input/training_metadata.tsv',
+        table='data/input/merged_biom_table.biom',
+        metadata='data/input/training_metadata.tsv',
         metadata_column='has_covid',
         shuffle=False,
         is_categorical=False,
@@ -145,7 +145,7 @@ def run_model():
 
     dataset = get_dataset(gd)
 
-    base_model = tf.keras.models.load_model('/home/swchan/DSC170/model.keras', compile=False)
+    base_model = tf.keras.models.load_model('AAM/model.keras', compile=False)
     base_model = ASVWrapper(base_model)
 
     model = Classifier(base_model)
