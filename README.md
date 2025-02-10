@@ -1,4 +1,8 @@
 # Assessing LLMs to Improve the Prediction of COVID-19 Status
+## Clone the Repository
+```python
+git clone https://github.com/ramosrenzo/COVID-LLM.git
+```
 
 ## DNABERT, DNABERT-2, GROVER
 
