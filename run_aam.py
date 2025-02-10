@@ -1,6 +1,6 @@
 import sys
 from AAM.model import run_model
-from data_preprocessing import preprocess_data
+from src.data_preprocessing import preprocess_data
 
 if __name__ == "__main__":
     try:

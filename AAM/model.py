@@ -97,20 +97,6 @@ class Classifier(K.Model):
 
 def run_model():
     #get data
-    fecal = pd.read_csv('data/fecal.tsv', sep='\t')
-
-    fecal_filtered = fecal[['sample_name', 'covid_positive']]
-    
-    fecal_filtered
-    
-    def check_covid_positive(row):
-        if row =='yes':
-            return 1
-        else:
-            return 0
-
-    fecal_filtered['has_covid'] = fecal_filtered['covid_positive'].apply(check_covid_positive)
-    fecal_filtered.set_index('sample_name', inplace=True)
 
     def get_dataset(gen):
         enqueuer = tf.keras.utils.OrderedEnqueuer(gen, use_multiprocessing=True)
