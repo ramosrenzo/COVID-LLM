@@ -2,7 +2,7 @@
 
 ## DNABERT, DNABERT-2, GROVER
 
-Note that DNABERT-2 will require a GPU to run.
+Note: DNABERT-2 will require a GPU to run.
 
 ### Setup Environment
 
@@ -36,8 +36,8 @@ Specify which model(s) to run with a target:
 `dnabert-2` runs DNABERT-2 model.
 
 `grover` runs GROVER model.
-`<br />`
-`<br />`
+<br />
+<br />
 Run the build script with one or multiple targets:
 
 ```python
