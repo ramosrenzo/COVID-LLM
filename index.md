@@ -204,6 +204,13 @@
     20%. Using these embeddings, we hope to be able to predict and classify the COVID status
     of individuals based on their microbial data.
 </p>
+<br/><br/>
+<img src="assets/aam_architecture.jpg" alt="AAM Architecture" width="740" height="auto">
+<p>Figure 1: Architecture of AAM</p>
+<br/><br/>
+<img src="assets/aam_denoise_unifrac_encoder.jpg" alt="AAM Denoise Unifrac Encoder" width="740" height="auto">
+<p>Figure 2: Architecture of Denoise UniFrac Encoder</p>
+<br/><br/>
 
 <h3>DNABERT</h3>
 <p>

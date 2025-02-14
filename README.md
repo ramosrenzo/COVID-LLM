@@ -1,8 +1,8 @@
-<h1>Assessing LLMs to Improve the Prediction of COVID-19 Status<h1>
+<h1>Assessing LLMs to Improve the Prediction of COVID-19 Status</h1>
 <p>
     Official website: <a href="https://ramosrenzo.github.io/COVID-LLMS">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
 </p>
-<br/><br/>
+
 <h2>Abstract</h2>
 <p>
     In this study, we assess the performance of four large language models (LLMs)—
