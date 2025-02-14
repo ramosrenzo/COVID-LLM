@@ -390,7 +390,7 @@
     }
     
     @media screen and (max-width: 768px) {
-        #table-of-contents {
+        #toc {
             display: none;
         }
     }
