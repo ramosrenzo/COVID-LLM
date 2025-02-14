@@ -1,3 +1,35 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.getElementById("toc")) return;
+
+        const toc = document.createElement("nav");
+        toc.id = "toc";
+        toc.innerHTML = "<h3>Table of Contents</h3><ul></ul>";
+        document.body.appendChild(toc);
+
+        const tocList = toc.querySelector("ul");
+        const headerTags = ["H2", "H3", "H4", "H5", "H6"];
+
+        document.querySelectorAll("h2, h3, h4, h5, h6").forEach((header) => {
+            const id = header.id || header.textContent.trim().replace(/\s+/g, "-").toLowerCase();
+            header.id = id;
+
+            if (
+                header.textContent.trim().toLowerCase() === "table of contents" || 
+                header.textContent.trim().toLowerCase() === "covid-llms-pages"
+            ) return;
+
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="#${id}">${header.textContent}</a>`;
+
+            const level = headerTags.indexOf(header.tagName); 
+            li.classList.add(`toc-level-${level+1}`);
+
+            tocList.appendChild(li);
+        });
+    });
+</script>
+
 <h1>Assessing LLMs to Improve the Prediction of COVID-19 Status<h1>
 <p id="authors">
     Team: Sean Chan, Carmen Truong, Kathleen Nguyen, and Lorenzo Ramos
@@ -298,6 +330,43 @@
 <h2>References</h2>
 
 <style>
+    #toc {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        width: 250px;
+        padding: 10px;
+        border-radius: 5px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    #toc h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    #toc ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    #toc li {
+        margin: 5px 0;
+    }
+
+    #toc a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    #toc a:hover {
+        text-decoration: underline;
+    }
+
+    .toc-level-1 { padding-left: 0px; }  /* h2 */
+    .toc-level-2 { padding-left: 15px; } /* h3 */
+
     p {
         font-size: 16px;
         line-height: 1.6;
