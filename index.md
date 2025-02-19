@@ -59,7 +59,7 @@
     communication across languages. This is made possible with the power of Large Language
     Models (LLMs). A large language model is a type of machine learning model that is trained
     on large sets of data to learn patterns and relationships among forms of written content via
-    deep neural networks <a href="#R1">(Toloka AI 2199)</a>. Originally developed for natural language processing
+    deep neural networks <a href="#Toloka">(Toloka AI 2199)</a>. Originally developed for natural language processing
     (NLP), LLMs have since expanded into a wide range of sectors, including healthcare.
     <br/><br/>
     The COVID-19 pandemic highlighted the importance of data in shaping public health
