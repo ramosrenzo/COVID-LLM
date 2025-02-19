@@ -70,7 +70,7 @@
     analysis of the virus’s impact and the development of treatments created vast amounts
     of healthcare data. AI models, including LLMs, played a significant role in analyzing this
     data during the pandemic, especially in processing scientific literature, summarizing research
-    findings, and tracking developments in real time (Farhat et al. 2023). While LLMs
+    findings, and tracking developments in real time <a href="#Farhat2023">(Farhat et al. 2023)</a>. While LLMs
     weren’t directly involved in developing predictive models, they assisted medical professionals
     and researchers by extracting relevant insights from data and providing accessible information
     to both fields. As a result, LLMs contributed to vaccine development and medical
@@ -80,15 +80,15 @@
     recordings. Text-based LLMs, such as BioBERT and PubMedBERT, were used to analyze
     clinical records, extract medical information, and identify patterns linked to COVID-19 diagnosis
     and patient outcomes. Genomic LLMs, such as GenSLMs, were used to classify and
-    cluster different COVID-19 genome sequences by distinguishing between variants (Zvyagin
-    et al. 2023). Additionally, LLMs were employed to analyze speech and audio data,
-    detecting COVID-19-specific vocal biomarkers in coughs or speech patterns (Anibal et al.
-    2024). Through these applications, LLMs provided insight and supported the development
+    cluster different COVID-19 genome sequences by distinguishing between variants <a href="#zvyagin2023genslms">(Zvyagin
+    et al. 2023)</a>. Additionally, LLMs were employed to analyze speech and audio data,
+    detecting COVID-19-specific vocal biomarkers in coughs or speech patterns <a href="#anibal2024omicron">(Anibal et al.
+    2024)</a>. Through these applications, LLMs provided insight and supported the development
     of predictive models for COVID-19, making a contribution to pandemic response efforts.
     <br/><br/>
     Although the Public Health Emergency has ended, COVID-19 continues to affect people
     globally. The virus remains highly mutative, with new variants likely to emerge, which
-    presents the ongoing challenges of tracking and managing its spread (Markov et al. 2023).
+    presents the ongoing challenges of tracking and managing its spread <a href="#Markov2023">(Markov et al. 2023)</a>.
     However, the many lessons learned from the pandemic continue to drive progress in combating 
     COVID-19 and future health crises. The ability of Large Language Models to track
     and offer insights into COVID-19 data not only improves our response to the virus, but
@@ -111,8 +111,8 @@
     At the core of the investigation and comparative framework is the application of Random
     Forest Classifiers, a machine learning algorithm. When Random Forest was applied
     to classify microbes associated with COVID-19, it resulted in a high predictive accuracy
-    among each sample of nares, stool, forehead, and floor inside the hospital (Marotz et al.
-    2020). Beyond the original study and its use of Random Forest Classifiers, we want to
+    among each sample of nares, stool, forehead, and floor inside the hospital <a href="#Marotz2020">(Marotz et al.
+    2020)</a>. Beyond the original study and its use of Random Forest Classifiers, we want to
     utilize Large Language Models. Contemporary solutions have increasingly relied on LLMs,
     which benefit from extensive pre-training on genomic data, offering its insight in analyzing
     biological information.
@@ -145,23 +145,23 @@
     Over the course of the pandemic, the world experienced millions of cases and deaths,
     prompting the development of vaccines and treatments aimed at improving the conditions
     of COVID-19. In response to the evolving crisis, accurate results of COVID-19 cases had become
-    essential for healthcare systems to effectively prevent and control the disease (Patil,
-    Mollaei and Barati Farimani 2023). With the help of machine learning, computational biology 
+    essential for healthcare systems to effectively prevent and control the disease <a href="#Patil2023">(Patil,
+    Mollaei and Barati Farimani 2023)</a>. With the help of machine learning, computational biology 
     has been able to make advancements and reveal the potential of utilizing microbiome
-    data to predict health outcomes (Bao et al. 2024), including infectious diseases such as
+    data to predict health outcomes <a href="#Bao2024">(Bao et al. 2024)</a>, including infectious diseases such as
     COVID-19. The microbiome — the community of microorganisms residing in the human
     body — has been present in a range of diseases, with growing evidence suggesting its role
-    in influencing immune responses and disease severity (Yeoh et al. 2021). A significant area
+    in influencing immune responses and disease severity <a href="#Yeoh2021">(Yeoh et al. 2021)</a>. A significant area
     of research has been the use of machine learning techniques to analyze microbiome data in
     the context of predicting their COVID-19 status — whether an individual has tested positive
     or negative for the virus.
     <br/><br/>
     Among classical machine learning methods, Random Forest algorithms have demonstrated
-    strong performance in classification tasks involving microbiome data (Hernández Medina
-    et al. 2022). Marotz, et al. (2020) applied Random Forest classifiers to predict COVID-19
+    strong performance in classification tasks involving microbiome data <a href="#HernandezMedina2022">(Hernández Medina
+    et al. 2022)</a>. Marotz, et al. (2020) applied Random Forest classifiers to predict COVID-19
     status using microbiome profiles obtained from 16S rRNA gene amplicon sequencing of
     various sample types, including nares, stool, skin (from the forehead), and hospital floor
-    (Marotz et al. 2020). The authors used a 20-time repeated, stratified 5-fold cross-validation
+    <a href="#Marotz2020">(Marotz et al. 2020)</a>. The authors used a 20-time repeated, stratified 5-fold cross-validation
     to optimize hyperparameters and evaluate the model, identifying key Amplicon Sequence
     Variants (ASVs) linked to COVID status. The model then achieved an AUROC of 0.89 for
     nares samples, 0.82 for stool, and 0.79 for forehead skin, demonstrating high prediction 
@@ -176,34 +176,33 @@
     data, such as genomic and microbiome sequences. Models like DNABERT,
     DNABERT-2, GROVER, and AAM are effective in modeling such data, leveraging transformer
     architectures to capture relationships within biological sequences and microbial communities.
-
     <ul>
-    <li> DNABERT and DNABERT-2 are both transformer-based models, but they differ in
-    the data they were trained on. DNABERT was primarily trained on single-species
-    genomes, while DNABERT-2 was trained on multi-species genomes. Despite this
-    difference, both models generate sequence-level embeddings that capture patterns
-    within microbial DNA sequences. DNABERT excels in understanding DNA and RNA,
-    whereas DNABERT-2 improves accuracy with more nuanced embeddings. When applied
-    to microbiome data, these models can enhance the predictive performance of
-    COVID-19 status classification by identifying specific sequence features associated
-    with infection.</li>
-    <li>GROVER is a transformer-based model that was trained on the human genome to understand
-    and generate biological sequences. It captures patterns in these sequences,
-    which could help identify microbial dynamics linked to COVID-19 outcomes. By 
-    modeling biological sequence relationships, GROVER can enhance prediction models
-    for disease status by improving the understanding of microbial features associated
-    with what progresses the infection.</li>
-    <li>Attention All Microbes uses attention-based mechanisms to generate sample-level
-    embeddings by aggregating microbiome data, reducing noise, and capturing global
-    microbial interactions. This approach focuses on entire microbial communities, which
-    can provide more accurate predictive features for COVID-19 status.</li>
+        <li> DNABERT and DNABERT-2 are both transformer-based models, but they differ in
+        the data they were trained on. DNABERT was primarily trained on single-species
+        genomes, while DNABERT-2 was trained on multi-species genomes. Despite this
+        difference, both models generate sequence-level embeddings that capture patterns
+        within microbial DNA sequences. DNABERT excels in understanding DNA and RNA,
+        whereas DNABERT-2 improves accuracy with more nuanced embeddings. When applied
+        to microbiome data, these models can enhance the predictive performance of
+        COVID-19 status classification by identifying specific sequence features associated
+        with infection.</li>
+        <li>GROVER is a transformer-based model that was trained on the human genome to understand
+        and generate biological sequences. It captures patterns in these sequences,
+        which could help identify microbial dynamics linked to COVID-19 outcomes. By 
+        modeling biological sequence relationships, GROVER can enhance prediction models
+        for disease status by improving the understanding of microbial features associated
+        with what progresses the infection.</li>
+        <li>Attention All Microbes uses attention-based mechanisms to generate sample-level
+        embeddings by aggregating microbiome data, reducing noise, and capturing global
+        microbial interactions. This approach focuses on entire microbial communities, which
+        can provide more accurate predictive features for COVID-19 status.</li>
     </ul>
 </p>
 
 <h2>Data Description</h2>
 <p>
     We utilized sequencing data and biome tables from the QIITA database (Study ID:
-    13092) (Gonzalez et al. 2018). The complete dataset comprises 972 samples collected
+    13092) <a href="#gonzalez2018qiita">(Gonzalez et al. 2018)</a>. The complete dataset comprises 972 samples collected
     from hospitalized ICU patients with COVID-19, healthcare providers, and hospital surfaces
     before, during, and after admission. None of the healthcare providers tested positive for
     COVID-19. SARS-CoV-2 was assessed using RT-qPCR and microbial communities were identified
@@ -270,7 +269,7 @@
 <h3>DNABERT-2</h3>
 <p>
     DNABERT-2 improves on its predecessor, DNABERT, by addressing sequence length
-    and training limitations as well as increasing the scope of the data. (Zhou et al. 2023)
+    and training limitations as well as increasing the scope of the data. <a href="#zhou2023dnabert">(Zhou et al. 2023)</a>
     The model achieves higher performance than the original in six out of seven different tasks
     which include epigenetic marks prediction, transcription factor prediction on both human
     and mouse genome, covid variants classification, promoter detection and splice site prediction.
@@ -294,7 +293,7 @@
 <h3>GROVER</h3>
 <p>
     GROVER is a foundation language model that adapted the transformer encoder BERT
-    architecture (Sanabria et al. 2024). Unlike DNABERT and DNABERT-2, which were pretrained
+    architecture <a href="#sanabria2024dna">(Sanabria et al. 2024)</a>. Unlike DNABERT and DNABERT-2, which were pretrained
     for classification tasks, GROVER was built for general genome modeling and can be
     fine-tuned for other various tasks such as CTCF motif binding, promoter classification, etc.
     Also, in addition to BPE-generated vocabulary, GROVER incorporates five special tokens
@@ -329,47 +328,47 @@
 
 <h2>References</h2>
 <div class="csl-bib-body">
-  <div id="zhou2023dnabert" data-csl-entry-id="zhou2023dnabert" class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">Z. Zhou, Y. Ji, W. Li, P. Dutta, R. Davuluri, and H. Liu, “Dnabert-2: Efficient foundation model and benchmark for multi-species genome,” <i>arXiv preprint arXiv:2306.15006</i>, 2023.</div>
+  <div id="anibal2024omicron" data-csl-entry-id="anibal2024omicron" class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">J. T. Anibal <i>et al.</i>, “Omicron detection with large language models and YouTube audio data,” <i>medRxiv</i>, 2024.</div>
   </div>
-  <div id="Toloka" data-csl-entry-id="Toloka" class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline">Toloka AI, “History of LLMs.” https://toloka.ai/blog/history-of-llms/ (accessed Feb. 08, 2024).</div>
+  <div id="Bao2024" data-csl-entry-id="Bao2024" class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline">Z. Bao, Z. Yang, R. Sun, and others, “Predicting host health status through an integrated machine learning framework: insights from healthy gut microbiome aging trajectory,” <i>Scientific Reports</i>, vol. 14, p. 31143, 2024, doi: 10.1038/s41598-024-82418-3.</div>
   </div>
   <div id="CentersforDiseaseControlandPrevention_2024" data-csl-entry-id="CentersforDiseaseControlandPrevention_2024" class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline">Centers for Disease Control and Prevention, “COVID-19 Timeline,” Jul. 2024. https://www.cdc.gov/museum/timeline/covid19.html# (accessed Feb. 08, 2024).</div>
-  </div>
-  <div id="Markov2023" data-csl-entry-id="Markov2023" class="csl-entry">
-    <div class="csl-left-margin">[4]</div><div class="csl-right-inline">P. V. Markov, M. Ghafari, M. Beer, and others, “The evolution of SARS-CoV-2,” <i>Nature Reviews Microbiology</i>, vol. 21, pp. 361–379, 2023, doi: 10.1038/s41579-023-00878-2.</div>
-  </div>
-  <div id="Marotz2020" data-csl-entry-id="Marotz2020" class="csl-entry">
-    <div class="csl-left-margin">[5]</div><div class="csl-right-inline">C. Marotz <i>et al.</i>, “Microbial context predicts SARS-CoV-2 prevalence in patients and the hospital built environment,” <i>medRxiv [Preprint]</i>, Nov. 2020, doi: 10.1101/2020.11.19.20234229.</div>
-  </div>
-  <div id="sanabria2024dna" data-csl-entry-id="sanabria2024dna" class="csl-entry">
-    <div class="csl-left-margin">[6]</div><div class="csl-right-inline">M. Sanabria, J. Hirsch, P. M. Joubert, and A. R. Poetsch, “DNA language model GROVER learns sequence context in the human genome,” <i>Nature Machine Intelligence</i>, vol. 6, no. 8, pp. 911–923, 2024.</div>
-  </div>
-  <div id="gonzalez2018qiita" data-csl-entry-id="gonzalez2018qiita" class="csl-entry">
-    <div class="csl-left-margin">[7]</div><div class="csl-right-inline">A. Gonzalez <i>et al.</i>, “Qiita: rapid, web-enabled microbiome meta-analysis,” <i>Nature methods</i>, vol. 15, no. 10, pp. 796–798, 2018.</div>
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline">Centers for Disease Control and Prevention, “COVID-19 Timeline,” Jul. 2024, Accessed: Feb. 08, 2024. [Online]. Available: https://www.cdc.gov/museum/timeline/covid19.html#</div>
   </div>
   <div id="Farhat2023" data-csl-entry-id="Farhat2023" class="csl-entry">
-    <div class="csl-left-margin">[8]</div><div class="csl-right-inline">F. Farhat, S. S. Sohail, M. T. Alam, S. Ubaid, A. M. Shakil, and D. Ø. Madsen, “COVID-19 and beyond: leveraging artificial intelligence for enhanced outbreak control,” <i>Frontiers in Artificial Intelligence</i>, vol. 6, p. 1266560, Nov. 2023, doi: 10.3389/frai.2023.1266560.</div>
+    <div class="csl-left-margin">[4]</div><div class="csl-right-inline">F. Farhat, S. S. Sohail, M. T. Alam, S. Ubaid, A. M. Shakil, and D. Ø. Madsen, “COVID-19 and beyond: leveraging artificial intelligence for enhanced outbreak control,” <i>Frontiers in Artificial Intelligence</i>, vol. 6, p. 1266560, Nov. 2023, doi: 10.3389/frai.2023.1266560.</div>
+  </div>
+  <div id="gonzalez2018qiita" data-csl-entry-id="gonzalez2018qiita" class="csl-entry">
+    <div class="csl-left-margin">[5]</div><div class="csl-right-inline">A. Gonzalez <i>et al.</i>, “Qiita: rapid, web-enabled microbiome meta-analysis,” <i>Nature methods</i>, vol. 15, no. 10, pp. 796–798, 2018.</div>
+  </div>
+  <div id="HernandezMedina2022" data-csl-entry-id="HernandezMedina2022" class="csl-entry">
+    <div class="csl-left-margin">[6]</div><div class="csl-right-inline">R. Hernández Medina, S. Kutuzova, K. N. Nielsen, and others, “Machine learning and deep learning applications in microbiome research,” <i>ISME Communications</i>, vol. 2, p. 98, 2022, doi: 10.1038/s43705-022-00182-9.</div>
+  </div>
+  <div id="Markov2023" data-csl-entry-id="Markov2023" class="csl-entry">
+    <div class="csl-left-margin">[7]</div><div class="csl-right-inline">P. V. Markov, M. Ghafari, M. Beer, and others, “The evolution of SARS-CoV-2,” <i>Nature Reviews Microbiology</i>, vol. 21, pp. 361–379, 2023, doi: 10.1038/s41579-023-00878-2.</div>
+  </div>
+  <div id="Marotz2020" data-csl-entry-id="Marotz2020" class="csl-entry">
+    <div class="csl-left-margin">[8]</div><div class="csl-right-inline">C. Marotz <i>et al.</i>, “Microbial context predicts SARS-CoV-2 prevalence in patients and the hospital built environment,” <i>medRxiv [Preprint]</i>, Nov. 2020, doi: 10.1101/2020.11.19.20234229.</div>
   </div>
   <div id="Patil2023" data-csl-entry-id="Patil2023" class="csl-entry">
     <div class="csl-left-margin">[9]</div><div class="csl-right-inline">S. Patil, P. Mollaei, and A. Barati Farimani, “Forecasting COVID-19 New Cases Using Transformer Deep Learning Model,” <i>medRxiv [Preprint]</i>, Nov. 2023, doi: 10.1101/2023.11.02.23297976.</div>
   </div>
-  <div id="Bao2024" data-csl-entry-id="Bao2024" class="csl-entry">
-    <div class="csl-left-margin">[10]</div><div class="csl-right-inline">Z. Bao, Z. Yang, R. Sun, and others, “Predicting host health status through an integrated machine learning framework: insights from healthy gut microbiome aging trajectory,” <i>Scientific Reports</i>, vol. 14, p. 31143, 2024, doi: 10.1038/s41598-024-82418-3.</div>
+  <div id="sanabria2024dna" data-csl-entry-id="sanabria2024dna" class="csl-entry">
+    <div class="csl-left-margin">[10]</div><div class="csl-right-inline">M. Sanabria, J. Hirsch, P. M. Joubert, and A. R. Poetsch, “DNA language model GROVER learns sequence context in the human genome,” <i>Nature Machine Intelligence</i>, vol. 6, no. 8, pp. 911–923, 2024.</div>
+  </div>
+  <div id="Toloka" data-csl-entry-id="Toloka" class="csl-entry">
+    <div class="csl-left-margin">[11]</div><div class="csl-right-inline">Toloka AI, “History of LLMs.” https://toloka.ai/blog/history-of-llms/ (accessed Feb. 08, 2024).</div>
   </div>
   <div id="Yeoh2021" data-csl-entry-id="Yeoh2021" class="csl-entry">
-    <div class="csl-left-margin">[11]</div><div class="csl-right-inline">Y. K. Yeoh <i>et al.</i>, “Gut microbiota composition reflects disease severity and dysfunctional immune responses in patients with COVID-19,” <i>Gut</i>, vol. 70, no. 4, pp. 698–706, Apr. 2021, doi: 10.1136/gutjnl-2020-323020.</div>
+    <div class="csl-left-margin">[12]</div><div class="csl-right-inline">Y. K. Yeoh <i>et al.</i>, “Gut microbiota composition reflects disease severity and dysfunctional immune responses in patients with COVID-19,” <i>Gut</i>, vol. 70, no. 4, pp. 698–706, Apr. 2021, doi: 10.1136/gutjnl-2020-323020.</div>
   </div>
-  <div id="HernandezMedina2022" data-csl-entry-id="HernandezMedina2022" class="csl-entry">
-    <div class="csl-left-margin">[12]</div><div class="csl-right-inline">R. Hernández Medina, S. Kutuzova, K. N. Nielsen, and others, “Machine learning and deep learning applications in microbiome research,” <i>ISME Communications</i>, vol. 2, p. 98, 2022, doi: 10.1038/s43705-022-00182-9.</div>
+  <div id="zhou2023dnabert" data-csl-entry-id="zhou2023dnabert" class="csl-entry">
+    <div class="csl-left-margin">[13]</div><div class="csl-right-inline">Z. Zhou, Y. Ji, W. Li, P. Dutta, R. Davuluri, and H. Liu, “Dnabert-2: Efficient foundation model and benchmark for multi-species genome,” <i>arXiv preprint arXiv:2306.15006</i>, 2023.</div>
   </div>
   <div id="zvyagin2023genslms" data-csl-entry-id="zvyagin2023genslms" class="csl-entry">
-    <div class="csl-left-margin">[13]</div><div class="csl-right-inline">M. Zvyagin <i>et al.</i>, “GenSLMs: Genome-scale language models reveal SARS-CoV-2 evolutionary dynamics,” <i>The International Journal of High Performance Computing Applications</i>, vol. 37, no. 6, pp. 683–705, 2023.</div>
-  </div>
-  <div id="anibal2024omicron" data-csl-entry-id="anibal2024omicron" class="csl-entry">
-    <div class="csl-left-margin">[14]</div><div class="csl-right-inline">J. T. Anibal <i>et al.</i>, “Omicron detection with large language models and YouTube audio data,” <i>medRxiv</i>, 2024.</div>
+    <div class="csl-left-margin">[14]</div><div class="csl-right-inline">M. Zvyagin <i>et al.</i>, “GenSLMs: Genome-scale language models reveal SARS-CoV-2 evolutionary dynamics,” <i>The International Journal of High Performance Computing Applications</i>, vol. 37, no. 6, pp. 683–705, 2023.</div>
   </div>
 </div>
 

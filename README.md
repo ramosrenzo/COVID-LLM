@@ -1,6 +1,6 @@
 <h1>Assessing LLMs to Improve the Prediction of COVID-19 Status</h1>
 <p>
-    Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
+    Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/" target="_blank">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
 </p>
 
 <h2>Abstract</h2>
