@@ -97,20 +97,6 @@ class Classifier(K.Model):
 
 def run_model():
     #get data
-    fecal = pd.read_csv('data/fecal.tsv', sep='\t')
-
-    fecal_filtered = fecal[['sample_name', 'covid_positive']]
-    
-    fecal_filtered
-    
-    def check_covid_positive(row):
-        if row =='yes':
-            return 1
-        else:
-            return 0
-
-    fecal_filtered['has_covid'] = fecal_filtered['covid_positive'].apply(check_covid_positive)
-    fecal_filtered.set_index('sample_name', inplace=True)
 
     def get_dataset(gen):
         enqueuer = tf.keras.utils.OrderedEnqueuer(gen, use_multiprocessing=True)
@@ -132,19 +118,20 @@ def run_model():
         return dataset
 
     gd = GeneratorDataset(
-        table='/home/swchan/DSC170/data/input/merged_biom_table.biom',
-        metadata='/home/swchan/DSC170/data/input/training_metadata.tsv',
+        table='data/input/merged_biom_table.biom',
+        metadata='data/input/training_metadata.tsv',
         metadata_column='has_covid',
         shuffle=False,
         is_categorical=False,
         shift=0,
         rarefy_depth = 5000,
-        scale=1
+        scale=1,
+        batch_size=4
     )
 
     dataset = get_dataset(gd)
 
-    base_model = tf.keras.models.load_model('/home/swchan/DSC170/model.keras', compile=False)
+    base_model = tf.keras.models.load_model('AAM/model.keras', compile=False)
     base_model = ASVWrapper(base_model)
 
     model = Classifier(base_model)
@@ -155,4 +142,4 @@ def run_model():
 
     model.compile(optimizer=optimizer, run_eagerly=False)
 
-    model.fit(dataset, epochs=1, steps_per_epoch=gd.steps_per_epoch)
+    model.fit(dataset, epochs=10, steps_per_epoch=gd.steps_per_epoch)
