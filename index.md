@@ -65,7 +65,7 @@
     The COVID-19 pandemic highlighted the importance of data in shaping public health
     responses and accelerating medical research. The virus was first detected in December 2019
     in Wuhan, China when patients experienced symptoms of an atypical pneumonia-like illness
-    from an unknown cause (Centers for Disease Control and Prevention 2024). It quickly
+    from an unknown cause <a href="#CentersforDiseaseControlandPrevention_2024">(Centers for Disease Control and Prevention 2024)</a>. It quickly
     spread worldwide, causing unprecedented levels of sickness and death. The need for realtime
     analysis of the virus’s impact and the development of treatments created vast amounts
     of healthcare data. AI models, including LLMs, played a significant role in analyzing this
@@ -329,46 +329,46 @@
 
 <h2>References</h2>
 <div class="csl-bib-body">
-  <div data-csl-entry-id="zhou2023dnabert" class="csl-entry">
+  <div id="zhou2023dnabert" data-csl-entry-id="zhou2023dnabert" class="csl-entry">
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline">Z. Zhou, Y. Ji, W. Li, P. Dutta, R. Davuluri, and H. Liu, “Dnabert-2: Efficient foundation model and benchmark for multi-species genome,” <i>arXiv preprint arXiv:2306.15006</i>, 2023.</div>
   </div>
-  <div data-csl-entry-id="Toloka" class="csl-entry">
+  <div id="Toloka" data-csl-entry-id="Toloka" class="csl-entry">
     <div class="csl-left-margin">[2]</div><div class="csl-right-inline">Toloka AI, “History of LLMs.” https://toloka.ai/blog/history-of-llms/ (accessed Feb. 08, 2024).</div>
   </div>
-  <div data-csl-entry-id="CentersforDiseaseControlandPrevention_2024" class="csl-entry">
+  <div id="CentersforDiseaseControlandPrevention_2024" data-csl-entry-id="CentersforDiseaseControlandPrevention_2024" class="csl-entry">
     <div class="csl-left-margin">[3]</div><div class="csl-right-inline">Centers for Disease Control and Prevention, “COVID-19 Timeline,” Jul. 2024. https://www.cdc.gov/museum/timeline/covid19.html# (accessed Feb. 08, 2024).</div>
   </div>
-  <div data-csl-entry-id="Markov2023" class="csl-entry">
+  <div id="Markov2023" data-csl-entry-id="Markov2023" class="csl-entry">
     <div class="csl-left-margin">[4]</div><div class="csl-right-inline">P. V. Markov, M. Ghafari, M. Beer, and others, “The evolution of SARS-CoV-2,” <i>Nature Reviews Microbiology</i>, vol. 21, pp. 361–379, 2023, doi: 10.1038/s41579-023-00878-2.</div>
   </div>
-  <div data-csl-entry-id="Marotz2020" class="csl-entry">
+  <div id="Marotz2020" data-csl-entry-id="Marotz2020" class="csl-entry">
     <div class="csl-left-margin">[5]</div><div class="csl-right-inline">C. Marotz <i>et al.</i>, “Microbial context predicts SARS-CoV-2 prevalence in patients and the hospital built environment,” <i>medRxiv [Preprint]</i>, Nov. 2020, doi: 10.1101/2020.11.19.20234229.</div>
   </div>
-  <div data-csl-entry-id="sanabria2024dna" class="csl-entry">
+  <div id="sanabria2024dna" data-csl-entry-id="sanabria2024dna" class="csl-entry">
     <div class="csl-left-margin">[6]</div><div class="csl-right-inline">M. Sanabria, J. Hirsch, P. M. Joubert, and A. R. Poetsch, “DNA language model GROVER learns sequence context in the human genome,” <i>Nature Machine Intelligence</i>, vol. 6, no. 8, pp. 911–923, 2024.</div>
   </div>
-  <div data-csl-entry-id="gonzalez2018qiita" class="csl-entry">
+  <div id="gonzalez2018qiita" data-csl-entry-id="gonzalez2018qiita" class="csl-entry">
     <div class="csl-left-margin">[7]</div><div class="csl-right-inline">A. Gonzalez <i>et al.</i>, “Qiita: rapid, web-enabled microbiome meta-analysis,” <i>Nature methods</i>, vol. 15, no. 10, pp. 796–798, 2018.</div>
   </div>
-  <div data-csl-entry-id="Farhat2023" class="csl-entry">
+  <div id="Farhat2023" data-csl-entry-id="Farhat2023" class="csl-entry">
     <div class="csl-left-margin">[8]</div><div class="csl-right-inline">F. Farhat, S. S. Sohail, M. T. Alam, S. Ubaid, A. M. Shakil, and D. Ø. Madsen, “COVID-19 and beyond: leveraging artificial intelligence for enhanced outbreak control,” <i>Frontiers in Artificial Intelligence</i>, vol. 6, p. 1266560, Nov. 2023, doi: 10.3389/frai.2023.1266560.</div>
   </div>
-  <div data-csl-entry-id="Patil2023" class="csl-entry">
+  <div id="Patil2023" data-csl-entry-id="Patil2023" class="csl-entry">
     <div class="csl-left-margin">[9]</div><div class="csl-right-inline">S. Patil, P. Mollaei, and A. Barati Farimani, “Forecasting COVID-19 New Cases Using Transformer Deep Learning Model,” <i>medRxiv [Preprint]</i>, Nov. 2023, doi: 10.1101/2023.11.02.23297976.</div>
   </div>
-  <div data-csl-entry-id="Bao2024" class="csl-entry">
+  <div id="Bao2024" data-csl-entry-id="Bao2024" class="csl-entry">
     <div class="csl-left-margin">[10]</div><div class="csl-right-inline">Z. Bao, Z. Yang, R. Sun, and others, “Predicting host health status through an integrated machine learning framework: insights from healthy gut microbiome aging trajectory,” <i>Scientific Reports</i>, vol. 14, p. 31143, 2024, doi: 10.1038/s41598-024-82418-3.</div>
   </div>
-  <div data-csl-entry-id="Yeoh2021" class="csl-entry">
+  <div id="Yeoh2021" data-csl-entry-id="Yeoh2021" class="csl-entry">
     <div class="csl-left-margin">[11]</div><div class="csl-right-inline">Y. K. Yeoh <i>et al.</i>, “Gut microbiota composition reflects disease severity and dysfunctional immune responses in patients with COVID-19,” <i>Gut</i>, vol. 70, no. 4, pp. 698–706, Apr. 2021, doi: 10.1136/gutjnl-2020-323020.</div>
   </div>
-  <div data-csl-entry-id="HernandezMedina2022" class="csl-entry">
+  <div id="HernandezMedina2022" data-csl-entry-id="HernandezMedina2022" class="csl-entry">
     <div class="csl-left-margin">[12]</div><div class="csl-right-inline">R. Hernández Medina, S. Kutuzova, K. N. Nielsen, and others, “Machine learning and deep learning applications in microbiome research,” <i>ISME Communications</i>, vol. 2, p. 98, 2022, doi: 10.1038/s43705-022-00182-9.</div>
   </div>
-  <div data-csl-entry-id="zvyagin2023genslms" class="csl-entry">
+  <div id="zvyagin2023genslms" data-csl-entry-id="zvyagin2023genslms" class="csl-entry">
     <div class="csl-left-margin">[13]</div><div class="csl-right-inline">M. Zvyagin <i>et al.</i>, “GenSLMs: Genome-scale language models reveal SARS-CoV-2 evolutionary dynamics,” <i>The International Journal of High Performance Computing Applications</i>, vol. 37, no. 6, pp. 683–705, 2023.</div>
   </div>
-  <div data-csl-entry-id="anibal2024omicron" class="csl-entry">
+  <div id="anibal2024omicron" data-csl-entry-id="anibal2024omicron" class="csl-entry">
     <div class="csl-left-margin">[14]</div><div class="csl-right-inline">J. T. Anibal <i>et al.</i>, “Omicron detection with large language models and YouTube audio data,” <i>medRxiv</i>, 2024.</div>
   </div>
 </div>
