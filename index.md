@@ -107,37 +107,6 @@
     effectively integrates Large Language Models into microbiome-based COVID-19 predictions.
     The objective is to improve diagnostic classification by enhancing both prediction
     accuracy and feature selection.
-    <br/><br/>
-    At the core of the investigation and comparative framework is the application of Random
-    Forest Classifiers, a machine learning algorithm. When Random Forest was applied
-    to classify microbes associated with COVID-19, it resulted in a high predictive accuracy
-    among each sample of nares, stool, forehead, and floor inside the hospital <a href="#Marotz2020">(Marotz et al.
-    2020)</a>. Beyond the original study and its use of Random Forest Classifiers, we want to
-    utilize Large Language Models. Contemporary solutions have increasingly relied on LLMs,
-    which benefit from extensive pre-training on genomic data, offering its insight in analyzing
-    biological information.
-    <br/><br/>
-    Models like DNABERT and GROVER both adapted the transformer architecture from
-    Bidirectional Encoder Representations from Transformers (BERT). In addition to BERT’s
-    abilities, DNABERT and GROVER have been specifically designed to interpret biological
-    sequences. DNABERT, for instance, focuses on DNA sequence data and is effective at predicting
-    disease-associated genetic variants. GROVER is optimized to process both DNA and
-    RNA sequences, allowing for the simultaneous analysis of multiple sequence types.
-    <br/><br/>
-    Beyond these models, our study also incorporates DNABERT-2 and AAM into our comparative 
-    framework. DNABERT-2 is a successor of DNABERT as it refines the original architecture 
-    and training process of DNABERT, leading to an improved contextual understanding
-    of k-mers. Its superior tokenization and representation capabilities make it a promising
-    candidate for detecting subtle genetic markers associated with COVID-19. By leveraging
-    DNABERT-2’s improved performance, we expect to capture more nuanced genomic features
-    that may correlate with disease status. Unlike DNABERT-based models that generate embeddings
-    at the sequence level, Attention All Microbes is specifically designed to derive
-    sample-level embeddings from microbiome data. It employs advanced attention mechanisms
-    to aggregate and denoise data from entire microbial communities. This approach
-    captures global microbial interactions and community structures, which has the potential
-    of revealing characteristic features that are indicative of COVID-19 status. AAM’s focus on
-    sample-level data offers a complementary perspective to the sequence-based embeddings
-    used in DNABERT and DNABERT-2.
 </p>
 
 <h2>Literature Review</h2>
