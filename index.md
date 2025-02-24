@@ -30,14 +30,14 @@
     });
 </script>
 
-<h1>Assessing LLMs to Improve the Prediction of COVID-19 Status<h1>
+<h1><b>Assessing LLMs to Improve the Prediction of COVID-19 Status</b><h1>
 <p id="authors">
     Team: Sean Chan, Carmen Truong, Kathleen Nguyen, and Lorenzo Ramos
     <br/>
     Mentor: Rob Knight
 </p>
 
-<h2>Abstract</h2>
+<h2><b>Abstract</b></h2>
 <p>
     In this study, we assess the performance of four large language models (LLMs)—
     DNABERT, DNABERT-2, GROVER and AAM—in predicting COVID-19 status
@@ -52,7 +52,7 @@
     we used AUROC and AUPRC to benchmark.
 </p>
 
-<h2>Introduction</h2>
+<h2><b>Introduction</b></h2>
 <p>
     With the vast amount of data available today, there are plenty of opportunities to harness
     it for global progress, from generating personalized recommendations to improving
@@ -109,7 +109,7 @@
     accuracy and feature selection.
 </p>
 
-<h2>Literature Review</h2>
+<h2><b>Literature Review</b></h2>
 <p>
     Over the course of the pandemic, the world experienced millions of cases and deaths,
     prompting the development of vaccines and treatments aimed at improving the conditions
@@ -168,7 +168,7 @@
     </ul>
 </p>
 
-<h2>Data Description</h2>
+<h2><b>Data Description</b></h2>
 <p>
     We utilized sequencing data and biome tables from the QIITA database (Study ID:
     13092) <a href="#gonzalez2018qiita">(Gonzalez et al. 2018)</a>. The complete dataset comprises 972 samples collected
@@ -183,7 +183,7 @@
     an 80:20 training and test split for each of the four environments.
 </p>
 
-<h2>Methods</h2>
+<h2><b>Methods</b></h2>
 
 <h3>Attention All Microbes (AAM)</h3>
 <p>
@@ -219,18 +219,8 @@
     natural language processing tasks. For instance, BERT is used for sentiment analysis and
     text summarization. DNABERT, on the other hand, relates more to medical use, particularly
     bioinformatics. The model is used to find important patterns in DNA sequences and
-    analyze the relationship within its context. Due to their application differences, there is a
-    significant contrast between the two models that are relevant to our experiment of working
-    with microbiome data:
-    <ul>
-        <li>Training data: BERT was trained on textual data. DNABERT was specifically trained
-        on the human genome.</li>
-        <li>Tokenization: BERT tokenizes text into either words or sub-words. DNABERT tok-
-        enizes DNA sequences with k-mer representation, with each different k leading to a
-        different tokenization of a DNA sequence</li>
-    </ul>
-    We leveraged the pre-trained DNABERT model available on HuggingFace for k-mer 6.
-    DNA sequences were individually inputted in the model by sample and we extracted the
+    analyze the relationship within its context. We leveraged the pre-trained DNABERT model available 
+    on HuggingFace for k-mer 6. DNA sequences were individually inputted in the model by sample and we extracted the
     hidden states as output. Then, the hidden states were mean-pooled to acquire final model
     embeddings at the sequence-level.
 </p>
@@ -242,17 +232,6 @@
     The model achieves higher performance than the original in six out of seven different tasks
     which include epigenetic marks prediction, transcription factor prediction on both human
     and mouse genome, covid variants classification, promoter detection and splice site prediction.
-    There are three major changes between the two models that are relevant to our
-    experiments:
-    <ul>
-        <li>Training data: DNABERT-2 is trained on multi-species genomes in addition to
-        the human genome.</li>
-        <li>Tokenization: DNABERT-2 replaces k-mer tokenization with Byte Pair Encoding
-        (BPE) to prevent information leakage</li>
-        <li>Embedding type: DNABERT-2 uses Attention with Linear Biases (ALiBi) instead of
-        positional embeddings like DNABERT. Positional embeddings introduce a 512 base
-        pair limitation, but by using ALiBi instead, this limitation is eliminated.</li>
-    </ul>
     We leveraged the pre-trained DNABERT-2 model available on HuggingFace. DNA sequences 
     were individually inputted in the model by sample, and we extracted the hidden
     states as output. Then, the hidden states were mean-pooled to acquire final model embeddings
@@ -266,36 +245,17 @@
     for classification tasks, GROVER was built for general genome modeling and can be
     fine-tuned for other various tasks such as CTCF motif binding, promoter classification, etc.
     Also, in addition to BPE-generated vocabulary, GROVER incorporates five special tokens
-    commonly used in transformer-based language models.
-    <ul>
-        <li>Five Special Token Representations.
-            <ul>
-            <li>CLS - Classification token</li>
-            <li>PAD - Ensures uniform sequence length during batching</li>
-            <li>UNK - Represents unknown tokens outside vocabulary</li>
-            <li>SEP - Used to indicate end of sequence</li>
-            <li>MASK - Masked tokens</li>
-            </ul>
-        </li>
-        <li>Training data: GROVER was exclusively trained on the human genome (hg19).</li>
-        <li>Tokenization: Like DNABERT-2, GROVER also employs BPE, which constructs a vo-
-        cabulary optimized for genome sequences. BPE helps mitigate frequency imbalance
-        regarding genomic k-mers and allows for a more flexible and informative represen-
-        tation of DNA sequences</li>
-        <li>Training objective: GROVER was trained for masked token prediction, but could
-        easily be fine-tuned</li>
-    </ul>
-    We used the pre-trained GROVER model available on HuggingFace. Acquiring the final
-    model embeddings at the sequence level is identical to DNABERT-2.
+    commonly used in transformer-based language models.We used the pre-trained GROVER model available on HuggingFace.
+    Acquiring the final model embeddings at the sequence level is identical to DNABERT-2.
 </p>
 
-<h2>Results</h2>
+<h2><b>Results</b></h2>
 
-<h2>Discussion</h2>
+<h2><b>Discussion</b></h2>
 
-<h2>Conclusion</h2>
+<h2><b>Conclusion</b></h2>
 
-<h2>References</h2>
+<h2><b>References</b></h2>
 <div class="csl-bib-body">
   <div id="anibal2024omicron" data-csl-entry-id="anibal2024omicron" class="csl-entry">
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline">J. T. Anibal <i>et al.</i>, “Omicron detection with large language models and YouTube audio data,” <i>medRxiv</i>, 2024.</div>
