@@ -14,6 +14,7 @@ Note: DNABERT-2 will require a GPU to run.
 
 Create and activate a virtual python environment:
 
+<<<<<<< HEAD
 ```python
 conda create -n covid_llms python=3.8
 conda activate covid_llms
@@ -58,6 +59,8 @@ Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and ran on Linux Virtual 
 
 Create and activate a virtual python environment:
 
+=======
+>>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
 ```
 conda create --name aam -c conda-forge -c bioconda unifrac python=3.9 cython
 
@@ -66,12 +69,17 @@ conda activate aam
 conda install -c conda-forge gxx_linux-64 hdf5 mkl-include lz4 hdf5-static libcblas liblapacke make
 ```
 
+<<<<<<< HEAD
 Install AAM:
+=======
+## Installing AAM
+>>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
 
 ```
 pip install git+https://github.com/kwcantrell/attention-all-microbes.git@s2s-updated
 ```
 
+<<<<<<< HEAD
 ### Run Model
 
 Run the build script:
@@ -79,3 +87,11 @@ Run the build script:
 ```python
 python run_aam.py
 ```
+=======
+## Running Model
+
+#### Training the models
+```
+python run.py
+```
+>>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
