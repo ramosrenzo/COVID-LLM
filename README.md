@@ -20,7 +20,7 @@ conda create --name covid_llms -c conda-forge -c bioconda unifrac python=3.9 cyt
 conda activate covid_llms
 ```
 
-## Install AAM
+Install required packages:
 
 ```
 pip install git+https://github.com/kwcantrell/attention-all-microbes.git@sequence-regressor
