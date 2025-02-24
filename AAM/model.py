@@ -92,14 +92,7 @@ class Classifier(K.Model):
         model.build(input_shape)
         return model
 
-<<<<<<< HEAD
-def run_model():
-    #get data
-
-    def get_dataset(gen):
-=======
 def get_dataset(gen):
->>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
         enqueuer = tf.keras.utils.OrderedEnqueuer(gen, use_multiprocessing=True)
         enqueuer.start(workers=2, max_queue_size=gen.steps_per_epoch)
         gen.stop = lambda: enqueuer.stop(0.1)
@@ -135,21 +128,7 @@ def train_model(train_fp, model=None):
     
     _, _, y_train, y_valid = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 
-<<<<<<< HEAD
-    gd = GeneratorDataset(
-        table='data/input/merged_biom_table.biom',
-        metadata='data/input/training_metadata.tsv',
-        metadata_column='has_covid',
-        shuffle=False,
-        is_categorical=False,
-        shift=0,
-        rarefy_depth = 5000,
-        scale=1,
-        batch_size=4
-    )
-=======
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
->>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
 
     curr_best_val_loss = np.inf
     curr_best_model = None
@@ -194,10 +173,6 @@ def train_model(train_fp, model=None):
                 return sample_type
             return "Unknown"
 
-<<<<<<< HEAD
-    base_model = tf.keras.models.load_model('AAM/model.keras', compile=False)
-    base_model = ASVWrapper(base_model)
-=======
         if model is None:
             base_model = tf.keras.models.load_model('model.keras', compile=False)
             model = Classifier(base_model)
@@ -228,7 +203,6 @@ def train_model(train_fp, model=None):
                   callbacks=[
                              EarlyStopping(patience=250, start_from_epoch=0, restore_best_weights=True)
                             ])
->>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
 
         validation_loss = history.history['val_loss']
         epochs = np.array(range(len(validation_loss)))
@@ -244,13 +218,7 @@ def train_model(train_fp, model=None):
 def run_model():
     #get data
 
-<<<<<<< HEAD
-    model.compile(optimizer=optimizer, run_eagerly=False)
-
-    model.fit(dataset, epochs=10, steps_per_epoch=gd.steps_per_epoch)
-=======
     train_model('data/input/training_metadata_nares.tsv')
     train_model('data/input/training_metadata_stool.tsv')
     train_model('data/input/training_metadata_inside_floor.tsv')
     train_model('data/input/training_metadata_forehead.tsv')
->>>>>>> b1b428ee88abc243b6fb151e97710a73e86c46a3
