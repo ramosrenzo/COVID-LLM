@@ -23,7 +23,7 @@ conda activate covid_llms
 Install required packages:
 
 ```
-pip install git+https://github.com/kwcantrell/attention-all-microbes.git@sequence-regressor
+pip install git+https://github.com/kwcantrell/attention-all-microbes.git@sequence-regressor-updated
 
 pip install -r requirements.txt
 ```
