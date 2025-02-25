@@ -182,6 +182,8 @@
     After filtering, the final dataset had a total of 337 samples which we further divided into
     an 80:20 training and test split for each of the four environments.
 </p>
+<img src="assets/covid19_status_across_environments.jpg" alt="COVID-19 Status Across Environments" width="740" height="auto">
+<p id="figure">Figure 1: The counts of COVID-19 status across sample environments.</p>
 
 <h2><b>Methods</b></h2>
 
@@ -206,10 +208,10 @@
 </p>
 <br/><br/>
 <img src="assets/aam_architecture.jpg" alt="AAM Architecture" width="740" height="auto">
-<p id="figure">Figure 1: Architecture of AAM</p>
+<p id="figure">Figure 2: Architecture of AAM</p>
 <br/><br/>
 <img src="assets/aam_denoise_unifrac_encoder.jpg" alt="AAM Denoise Unifrac Encoder" width="740" height="auto">
-<p id="figure">Figure 2: Architecture of Denoise UniFrac Encoder</p>
+<p id="figure">Figure 3: Architecture of Denoise UniFrac Encoder</p>
 <br/><br/>
 
 <h3>DNABERT</h3>
@@ -249,7 +251,15 @@
     Acquiring the final model embeddings at the sequence level is identical to DNABERT-2.
 </p>
 
+<img src="assets/comparison_of_pretrained_models.jpg" alt="Comparison of Pre-trained Models" width="740" height="auto">
+<p id="figure">Figure 4: Our four large language models differ in their embedding type and the data they are pre-trained on.</p>
+
+<img src="assets/data_processing_classification_pipeline.jpg" alt="Data Processing and Classification Pipeline" width="740" height="auto">
+<p id="figure">Figure 5: Samples are categorized into four environment types, with each subset split 80:20 into training and test sets. Each environment type is processed separately through the LLMs to acquire embeddings. The embeddings are passed individually through a classifier to be labeled as “Positive” or “Not detected”.</p>
+
 <h2><b>Results</b></h2>
+<img src="assets/random_forest_results.jpg" alt="Random Forest Results" width="740" height="auto">
+<p id="figure">Figure 6: The hospital's study results using random forest.</p>
 
 <h2><b>Discussion</b></h2>
 
