@@ -222,7 +222,7 @@
     text summarization. DNABERT, on the other hand, relates more to medical use, particularly
     bioinformatics. The model is used to find important patterns in DNA sequences and
     analyze the relationship within its context. We leveraged the pre-trained DNABERT model available 
-    on HuggingFace for k-mer 6. DNA sequences were individually inputted in the model by sample and we extracted the
+    on HuggingFace for k-mer 5. DNA sequences were individually inputted in the model by sample and we extracted the
     hidden states as output. Then, the hidden states were mean-pooled to acquire final model
     embeddings at the sequence-level.
 </p>
