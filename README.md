@@ -6,15 +6,20 @@ Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LL
 git clone https://github.com/ramosrenzo/COVID-LLM.git
 ```
 
-## DNABERT, DNABERT-2, GROVER
+## Checkout DNABERT-2 branch
+```python
+cd COVID-LLM
 
-Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and ran on Linux Virtual Machine
+git checkout dnabert-2
+```
+
+## DNABERT-2
 
 ### Setup Environment
 
 Create and activate a virtual python environment:
 
-```
+```python
 conda create --name covid_llms -c conda-forge -c bioconda unifrac python=3.9 cython
 
 conda activate covid_llms
@@ -22,13 +27,22 @@ conda activate covid_llms
 
 Install required packages:
 
-```
-pip install git+https://github.com/kwcantrell/attention-all-microbes.git@sequence-regressor-updated
+```python
+pip install git+https://github.com/kwcantrell/attention-all-microbes.git@capstone-2025
 
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-## Run Model
+Please ensure that the `triton` package is not installed in your environment:
+
+```python
+pip uninstall triton
 ```
-python run_dnabert_2.py
+
+### Run Model
+
+Run the build script:
+
+```python
+python run.py
 ```

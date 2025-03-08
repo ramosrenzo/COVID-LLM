@@ -6,6 +6,8 @@ scipy
 statsmodels
 biopython
 pandas
+matplotlib
+keras-tuner
 einops==0.6.1
 transformers==4.29.2
 peft==0.3.0
