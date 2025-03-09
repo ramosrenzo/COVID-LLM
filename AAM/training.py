@@ -60,7 +60,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             y_valid = y.iloc[valid_index]
     
             if sample_type == 'stool':
-                rarefy_depth = 1000
+                rarefy_depth = 4000
             else:
                 rarefy_depth = 1000
             dataset_train = GeneratorDataset(
