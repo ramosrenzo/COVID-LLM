@@ -1,8 +1,9 @@
+from GROVER.model import GeneratorDataset
+
 import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
-from GROVER.model import GeneratorDataset
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,7 +16,7 @@ K = tf.keras
 
 def get_sample_type(file_path):
     '''
-    Returns sample environment type from file path
+    Returns test sample environment type from file path
     '''
     filename = os.path.basename(file_path)
     if filename.startswith('test_metadata_'):
