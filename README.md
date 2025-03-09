@@ -59,7 +59,7 @@ python run_data.py <target_1> <target_2>
 ```
 
 ### Run Classifier
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_<model>` folder and plots are stored in the `figures` folder. Use a target argument to specify which model to run:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification. Trained models are stored in the `trained_models_<model>` folder and plots are stored in the `figures` folder. Use a target argument to specify which model to run:
 - `aam` - Runs AAM.
 
 - `dnabert` - Runs DNABERT.
