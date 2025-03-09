@@ -20,6 +20,8 @@ Create and activate a virtual python environment:
 conda create --name covid_llms -c conda-forge -c bioconda unifrac python=3.9 cython
 
 conda activate covid_llms
+
+conda install -c conda-forge gxx_linux-64 hdf5 mkl-include lz4 hdf5-static libcblas liblapacke make
 ```
 
 Install required packages:
@@ -36,8 +38,16 @@ Please ensure that the `triton` package is not installed in your environment, as
 pip uninstall triton
 ```
 
+To run our Jupyter notebooks, use the following commands to add the `covid_llms` Conda environment:
+
+```python
+conda install -c anaconda ipykernel
+python -m ipykernel install --user --name=covid_llms
+```
+
 ### Run Data Preprocessing and Get Embeddings
-The build script `run_data.py` handles data preprocessing and generates embeddings from the LLMs. Data is stored in the `data/input` folder. Use a target argument to specify which LLM to run:
+The build script `run_data.py` handles data preprocessing and generates embeddings from the LLMs. If Git LFS is not installed, then this script is necessary to run before moving on to the classifer stage. Data is stored in the `data/input` folder. Use a target argument to specify which LLM to run:
+
 - `dnabert` - Runs DNABERT.
 
 - `dnabert-2` – Runs DNABERT-2.
@@ -59,7 +69,7 @@ python run_data.py <target_1> <target_2>
 ```
 
 ### Run Classifier
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification. Trained classifiers are stored in the `trained_models_<LLM>` folder and plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification ("Positve" or "Not detected"). Trained classifiers are stored in the `trained_models_<LLM>` folder and plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
 - `aam` - Uses AAM embeddings.
 
 - `dnabert` - Uses DNABERT embeddings.
@@ -72,12 +82,12 @@ Use a second target argument to specify which stage of the pipeline to execute:
 
 - `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the test target separately.
 
-- `training` – Runs the training process.
+- `train` – Runs the training process.
 
 - `test` – Runs testing and plots AUROC and AUPRC scores.
 
 Run the build script with two targets:
 
 ```python
-python run.py <target_1> <target_2>
+python run.py <target-1> <target-2>
 ```

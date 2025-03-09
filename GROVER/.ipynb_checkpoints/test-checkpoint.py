@@ -1,17 +1,22 @@
-from DNABERT.model import GeneratorDataset
+from GROVER.model import GeneratorDataset
+
 import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
+
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import biom
 import os
+
 tf.keras.utils.set_random_seed(42)
+K = tf.keras
 
 def get_sample_type(file_path):
     '''
-    Returns the name of the sample environment from the test metadata file path.
+    Returns test sample environment type from file path
     '''
     filename = os.path.basename(file_path)
     if filename.startswith('test_metadata_'):
@@ -31,9 +36,7 @@ def test_model(test_fp, model_fp, ensemble=False):
     else:
         rarefy_depth = 1000
 
-    sequence_embedding_fp = 'data/input/asv_embeddings_dnabert.npy'
-    sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
-
+    sequence_embeddings = 'data/input/asv_embeddings_grover.npy'
     gd_test = [GeneratorDataset(
         table='data/input/merged_biom_table.biom',
         metadata=y_test,
@@ -45,16 +48,14 @@ def test_model(test_fp, model_fp, ensemble=False):
         scale=1,
         batch_size = 32,
         epochs=1,
-        gen_new_tables = False,
-        sequence_embeddings = sequence_embedding_fp,
-        sequence_labels = sequence_labels_fp,
+        sequence_embeddings = sequence_embeddings,
+        sequence_labels = 'data/input/asv_embeddings_ids.npy',
         upsample=False,
         drop_remainder=False,
         gen_new_table_frequency = 1,
         rarefy_seed = 42 + i
-        ) for i in range(69)
-    ]
-    
+    ) for i in range(69)
+              ]
     if '.keras' in model_fp:
         model=tf.keras.models.load_model(model_fp, compile=False)
         predictions = [model.predict(ds, steps=ds.steps_per_epoch) for ds in gd_test]
@@ -83,5 +84,6 @@ def test_model(test_fp, model_fp, ensemble=False):
             ensemble_y_true.append(y_true)
         ensemble_y_pred = np.vstack(ensemble_y_pred).mean(axis=0)
         ensemble_y_true = np.vstack(ensemble_y_true).mean(axis=0)
+    
         auc_score = 0
         return (ensemble_y_pred, ensemble_y_true), auc_score

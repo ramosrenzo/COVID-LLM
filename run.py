@@ -26,11 +26,11 @@ if __name__ == "__main__":
         
         if model not in ['aam', 'dnabert', 'dnabert-2', 'grover']:
             raise Exception("Incorrect model name. Available models: 'aam', 'dnabert', 'dnabert-2', and 'grover'")
-        elif target not in ['training', 'test', 'all']:
-            raise Exception("Incorrect target name. Available targets: 'training', 'test', and 'all'")
+        elif target not in ['train', 'test', 'all']:
+            raise Exception("Incorrect target name. Available targets: 'train', 'test', and 'all'")
         
         if model == 'aam':
-            if target in ['training','all']:
+            if target in ['train','all']:
                 train_model_aam(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=256, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.99, weight_decay=0.0001 )
                 train_model_aam(train_fp ='data/input/training_metadata_inside_floor.tsv', large=False, opt_type='adam', hidden_dim=256, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.999, weight_decay=0.0001)
                 train_model_aam(train_fp ='data/input/training_metadata_nares.tsv', large=False, opt_type='adam', hidden_dim=256, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.001, use_cova=False, beta_1=0.5, beta_2=0.999, weight_decay=0.0001)
@@ -43,7 +43,7 @@ if __name__ == "__main__":
                 plot_auroc_auprc_aam(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions)
         
         if model == 'dnabert':            
-            if target in ['training', 'all']:
+            if target in ['train', 'all']:
                 train_model_dnabert(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, beta_1=0.9, beta_2=0.99, weight_decay=0.0001)
                 train_model_dnabert(train_fp ='data/input/training_metadata_inside_floor.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.0001, beta_1=0.9, beta_2=0.999, weight_decay=0.0001)
                 train_model_dnabert(train_fp ='data/input/training_metadata_nares.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.001, beta_1=0.5, beta_2=0.999, weight_decay=0.0001)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
                 plot_auroc_auprc_dnabert(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions)
 
         if model == 'dnabert-2':
-            if target in ['training','all']:
+            if target in ['train','all']:
                 train_model_dnabert_2(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.99, weight_decay=0.0001 )
                 train_model_dnabert_2(train_fp ='data/input/training_metadata_inside_floor.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.999, weight_decay=0.0001)
                 train_model_dnabert_2(train_fp ='data/input/training_metadata_nares.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.001, use_cova=False, beta_1=0.5, beta_2=0.999, weight_decay=0.0001)
@@ -69,7 +69,7 @@ if __name__ == "__main__":
                 plot_auroc_auprc_dnabert_2(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions)
         
         if model == 'grover':
-            if target in ['training','all']:
+            if target in ['train','all']:
                 train_model_grover(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.99, weight_decay=0.0001 )
                 train_model_grover(train_fp ='data/input/training_metadata_inside_floor.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.999, weight_decay=0.0001)
                 train_model_grover(train_fp ='data/input/training_metadata_nares.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.001, use_cova=False, beta_1=0.5, beta_2=0.999, weight_decay=0.0001)

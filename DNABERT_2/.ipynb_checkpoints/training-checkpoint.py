@@ -1,14 +1,20 @@
-from DNABERT.model import GeneratorDataset
-from DNABERT.model import Classifier
 import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
+
+from aam.models.sequence_regressor import SequenceRegressor
+from aam.models.sequence_regressor_v2 import SequenceRegressorV2
+from aam.callbacks import SaveModel
 from keras.callbacks import EarlyStopping
-from sklearn.model_selection import StratifiedKFold
+from DNABERT_2.model import GeneratorDataset
+from DNABERT_2.model import Classifier
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split, StratifiedKFold
+from biom import Table, load_table
 import os
 import sys
 import warnings
@@ -25,21 +31,18 @@ def get_sample_type(file_path):
         return sample_type
     return "Unknown"
 
-
 def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, use_cova=False, beta_1=None, beta_2=None, weight_decay=None):
     training_metadata = pd.read_csv(train_fp, sep='\t', index_col=0)
     X = training_metadata.drop(columns=['study_sample_type', 'has_covid'], axis=1)
     y = training_metadata[['study_sample_type', 'has_covid']]
     sample_type = get_sample_type(train_fp)
-
-    dir_path = f'trained_models_dnabert/{sample_type}'
+    
+    dir_path = f'trained_models_dnabert_2/{sample_type}'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-        
-    sequence_embedding_fp = 'data/input/asv_embeddings_dnabert.npy'
-    sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
+    sequence_embedding_fp = 'data/input/asv_embeddings_dnabert_2.npy'
     sequence_embedding_dim = 768
-    
+
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     curr_best_val_loss = np.inf
@@ -52,8 +55,8 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             rarefy_depth = 4000
         else:
             rarefy_depth = 1000
-    
-        gd_train = GeneratorDataset(
+        
+        dataset_train = GeneratorDataset(
             table='data/input/merged_biom_table.biom',
             metadata=y_train,
             metadata_column='has_covid',
@@ -65,12 +68,12 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             batch_size = 4,
             gen_new_tables = True,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = sequence_labels_fp,
+            sequence_labels = 'data/input/asv_embeddings_ids.npy',
             upsample=False,
             drop_remainder=False
         )
     
-        gd_valid = GeneratorDataset(
+        dataset_valid = GeneratorDataset(
             table='data/input/merged_biom_table.biom',
             metadata=y_valid,
             metadata_column='has_covid',
@@ -81,59 +84,60 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             scale=1,
             batch_size = 4,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = sequence_labels_fp,
+            sequence_labels = 'data/input/asv_embeddings_ids.npy',
             upsample=False,
             drop_remainder=False,
             rarefy_seed = 42
         )
 
         model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate)
+
         asv_embedding_shape = tf.TensorShape([None, None, sequence_embedding_dim])
         count_shape = tf.TensorShape([None, None, 1])
         model.build([asv_embedding_shape, count_shape])
-
         if opt_type == 'adam':
             optimizer = tf.keras.optimizers.Adam(
                 learning_rate=tf.keras.optimizers.schedules.CosineDecay(
                 initial_learning_rate = 0.0,
                 warmup_target = learning_rate,
                 warmup_steps=0,
-                decay_steps=100_000,
+                decay_steps=100000,
                 ),
                 use_ema = True,
                 beta_1 = beta_1,
                 beta_2 = beta_2,
                 weight_decay = weight_decay
-            )
+                )
             early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=False)
         else:
             optimizer = tf.keras.optimizers.legacy.SGD(
                 learning_rate=tf.keras.optimizers.schedules.CosineDecay(
                 initial_learning_rate = 0.0,
-                warmup_target = learning_rate,
+                warmup_target = learning_rate, # maybe change
                 warmup_steps=0,
                 decay_steps=100_000,
                 ),
                 momentum = momentum
             )
             early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=True)
-            
+    
         model.compile(optimizer=optimizer, run_eagerly=False)
-        history = model.fit(gd_train, 
-                  validation_data = gd_valid, 
-                  validation_steps=gd_valid.steps_per_epoch, 
-                  epochs=10_000,
-                  steps_per_epoch=gd_train.steps_per_epoch, 
+        history = model.fit(dataset_train, 
+                  validation_data = dataset_valid, 
+                  validation_steps=dataset_valid.steps_per_epoch, 
+                  epochs=10_000, 
+                  steps_per_epoch=dataset_train.steps_per_epoch, 
                   callbacks=[
-                      early_stop
-                   ])
+                             early_stop
+                            ])
+        
         if opt_type == 'adam':
             model.optimizer.finalize_variable_values(model.trainable_variables)
 
         validation_loss = history.history['val_loss']
         train_loss = history.history['loss']
         epochs = np.array(range(len(validation_loss)))
-        
+
         min_val_loss = np.min(history.history['val_loss'])
         if min_val_loss < curr_best_val_loss:
             curr_best_model = model
@@ -146,4 +150,4 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
         plt.close()
         model.save(os.path.join(dir_path, f'{sample_type}_{i}_model.keras'), save_format='keras')
     curr_best_model.save(os.path.join(dir_path, f'{sample_type}_best_model.keras'), save_format='keras')
-    print(f"\nDNABERT: Best model saved for {get_sample_type(train_fp)} samples.")
+    print(f"\nDNABERT-2: Best model saved for {sample_type} samples.")
