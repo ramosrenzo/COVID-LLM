@@ -2,7 +2,7 @@
 Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
 
 ## Clone the Repository
-Our work was run on a Linux Virtual Machine with 64GB of CPU memory and a NVIDIA 2080 Ti GPU. We used <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git Large File Storage (LFS)</a> to upload our AAM, DNABERT, DNABERT-2, and GROVER embeddings, along with trained Keras models. Please ensure Git LFS is installed. Alternatively, you can preprocess the data and generate embeddings locally using the `run_data.py` script.
+The large language models (LLMs) was run on a Linux Virtual Machine with 64GB of CPU memory and a NVIDIA 2080 Ti GPU. We used <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git Large File Storage (LFS)</a> to upload our embeddings from AAM, DNABERT, DNABERT-2, and GROVER, along with our trained Keras classifiers. Please ensure Git LFS is installed. Alternatively, you can preprocess the data and generate embeddings locally using the `run_data.py` script.
 
 Clone the repository:
 ```python
@@ -37,7 +37,7 @@ pip uninstall triton
 ```
 
 ### Run Data Preprocessing and Get Embeddings
-The build script `run_data.py` handles data preprocessing and generates embeddings from the large language models. Data is stored in the `data/input` folder. Use a target argument to specify which model to run:
+The build script `run_data.py` handles data preprocessing and generates embeddings from the LLMs. Data is stored in the `data/input` folder. Use a target argument to specify which LLM to run:
 - `dnabert` - Runs DNABERT.
 
 - `dnabert-2` – Runs DNABERT-2.
@@ -46,11 +46,11 @@ The build script `run_data.py` handles data preprocessing and generates embeddin
 
 Use a second target argument to specify which stage of the pipeline to execute:
 
-- `all` - Preprocesses sample data and generates embeddings from DNABERT-2.
+- `all` - Preprocesses sample data and generates embeddings.
 
 - `samples` – Preprocesses sample data.
 
-- `embedding` – Generates embeddings from DNABERT-2.
+- `embedding` – Generates embeddings.
 
 Run the build script with two targets:
 
@@ -59,14 +59,14 @@ python run_data.py <target_1> <target_2>
 ```
 
 ### Run Classifier
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification. Trained models are stored in the `trained_models_<model>` folder and plots are stored in the `figures` folder. Use a target argument to specify which model to run:
-- `aam` - Runs AAM.
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification. Trained classifiers are stored in the `trained_models_<LLM>` folder and plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
+- `aam` - Uses AAM embeddings.
 
-- `dnabert` - Runs DNABERT.
+- `dnabert` - Uses DNABERT embeddings.
 
-- `dnabert-2` – Runs DNABERT-2.
+- `dnabert-2` – Uses DNABERT-2 embeddings.
 
-- `grover` – Runs GROVER.
+- `grover` – Uses GROVER embeddings.
 
 Use a second target argument to specify which stage of the pipeline to execute:
 
@@ -74,7 +74,7 @@ Use a second target argument to specify which stage of the pipeline to execute:
 
 - `training` – Runs the training process.
 
-- `test` – Runs testing and plots AUROC and AUPRC.
+- `test` – Runs testing and plots AUROC and AUPRC scores.
 
 Run the build script with two targets:
 
