@@ -6,76 +6,65 @@ Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LL
 git clone https://github.com/ramosrenzo/COVID-LLM.git
 ```
 
-## DNABERT, DNABERT-2, GROVER
+## Checkout DNABERT-2 branch
+```python
+cd COVID-LLM
 
-Note: DNABERT-2 will require a GPU to run.
+git checkout dnabert-2
+```
+
+## DNABERT-2
+Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
 
 ### Setup Environment
 
 Create and activate a virtual python environment:
 
 ```python
-conda create -n covid_llms python=3.8
+conda create --name covid_llms -c conda-forge -c bioconda unifrac python=3.9 cython
+
 conda activate covid_llms
 ```
 
 Install required packages:
 
 ```python
+pip install git+https://github.com/kwcantrell/attention-all-microbes.git@capstone-2025
+
 python -m pip install -r requirements.txt
 ```
 
-Please ensure that the `triton` package is not installed in your environment:
+Please ensure that the `triton` package is not installed in your environment, as it may cause errors when running DNABERT-2:
 
 ```python
 pip uninstall triton
 ```
 
-### Run Model
+### Run Data Preprocessing and Get Embeddings
+The build script `run_data.py` handles sample data preprocessing and generates embeddings from DNABERT-2. Data is stored in the `data/input` folder. Use a target argument to specify which stage of the pipeline to execute:
+- `all` - Preprocesses sample data and generates embeddings from DNABERT-2.
 
-Specify which model(s) to run with a target:
+- `samples` – Preprocesses sample data.
 
-`all` runs DNABERT, DNABERT-2, and GROVER.
+- `embedding` – Generates embeddings from DNABERT-2.
 
-`dnabert` runs DNABERT model.
+Run the build script with one target:
 
-`dnabert-2` runs DNABERT-2 model.
+```python
+python run_data.py <target>
+```
 
-`grover` runs GROVER model.
-<br />
-<br />
-Run the build script with one or multiple targets:
+### Run Classifier
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_dnabert_2` folder and plots are stored in the `figures` folder. Use a target argument to specify which stage of the pipeline to execute:
+
+- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
+
+- `training` – Runs the training process.
+
+- `test` – Runs testing and plots AUROC and AUPRC.
+
+Run the build script with one target:
 
 ```python
 python run.py <target>
-```
-
-## AAM
-
-### Setup Environment
-
-Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and ran on Linux Virtual Machine
-
-Create and activate a virtual python environment:
-
-```
-conda create --name aam -c conda-forge -c bioconda unifrac python=3.9 cython
-
-conda activate aam
-
-conda install -c conda-forge gxx_linux-64 hdf5 mkl-include lz4 hdf5-static libcblas liblapacke make
-```
-
-Install AAM:
-
-```
-pip install git+https://github.com/kwcantrell/attention-all-microbes.git@s2s-updated
-```
-
-### Run Model
-
-Run the build script:
-
-```python
-python run_aam.py
 ```
