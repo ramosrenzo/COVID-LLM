@@ -46,7 +46,7 @@ The build script `run_embedding.py` generates and stores embeddings from DNABERT
 ```python
 python run_embedding.py
 ```
-The build script `run.py` handles training, testing, and plotting AUROC and AUPRC scores. Use a target argument to specify which part of the pipeline to execute:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Use a target argument to specify which part of the pipeline to execute:
 
 - `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
 

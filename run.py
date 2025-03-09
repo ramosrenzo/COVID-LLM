@@ -8,7 +8,7 @@ if __name__ == "__main__":
     try:
         target = sys.argv[1]
         if target not in ['training', 'test', 'all']:
-            raise Exception("Incorrect target name. Available targets: 'embedding', 'training', 'test', and 'all'")
+            raise Exception("Incorrect target name. Available targets: 'training', 'test', and 'all'")
         if target in ['training','all']:
             train_model(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, use_cova=False, beta_1=0.9, beta_2=0.99, weight_decay=0.0001 )
 
