@@ -121,10 +121,6 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         return self.steps_per_epoch
     
     def __getitem__(self, idx):
-        # start = idx * self.batch_size
-        # end = start + self.batch_size
-        # sample_indices = self.sample_indices[start:end]
-        # batch_sample_ids = self.sample_ids[sample_indices]
         if self.upsample == True:
             batch_metadata = self.metadata.groupby(self.metadata_column).sample(self.batch_size//2, replace=True)
             batch_sample_ids = batch_metadata.index.to_numpy()
@@ -135,14 +131,12 @@ class GeneratorDataset(tf.keras.utils.Sequence):
             batch_sample_ids = self.sample_ids[sample_indices]
         return self._batch_data(batch_sample_ids)
             
-    
     def _batch_data(self, batch_sample_ids):
         num_unique_asvs, sparse_indices, obs_indices, counts = [], [], [], []
         cur_row_indx = 0
         for s_id in batch_sample_ids:
             sample_data = self.rarefied_table.data(s_id, dense=False).tocoo()
             obs_idx, sample_counts = sample_data.row, sample_data.data
-            # remove zeros
             non_zero_mask = sample_counts > 0.0
             obs_idx = obs_idx[non_zero_mask]
             sample_counts = sample_counts[non_zero_mask]
@@ -156,7 +150,6 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         obs_indices = np.hstack(obs_indices, dtype=np.int32)
         counts = np.hstack(counts, dtype=np.float32)[:, np.newaxis]
         
-        # get list of unique observations in batch
         unique_obs, obs_indices = np.unique(obs_indices, return_inverse=True)
         if self.sequence_embeddings is None:
             lookup = {
@@ -301,8 +294,6 @@ class Classifier(K.Model):
     def train_step(self, data):
         x, y = data
 
-        # create attention mask
-        # example [["ACTG"], [""]]
         with tf.GradientTape() as tape:
             sample_embeddings, output = self(x, training=True)
             loss = self.compute_loss(y, output)
@@ -357,7 +348,6 @@ class Classifier(K.Model):
         
 def get_sample_type(file_path):
     filename = os.path.basename(file_path)
-    # Remove the 'training_metadata_' prefix and the file extension
     if filename.startswith('training_metadata_'):
         sample_type = filename[len('training_metadata_'):]
         sample_type = os.path.splitext(sample_type)[0]
@@ -365,7 +355,6 @@ def get_sample_type(file_path):
     return "Unknown"
     
 def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, beta_1=None, beta_2=None, weight_decay=None, momentum=None, model_fp=None, large=True):
-    print()
     training_metadata = pd.read_csv(train_fp, sep='\t', index_col=0)
     X = training_metadata.drop(columns=['study_sample_type', 'has_covid'], axis=1)
     y = training_metadata[['study_sample_type', 'has_covid']]
@@ -373,12 +362,9 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
     dir_path = f'trained_models/{sample_type}_{opt_type}_{"large" if large else "small"}'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-    if not large:
-        sequence_embedding_fp = 'asv_embeddings.npy'
-        sequence_embedding_dim = 256
-    else:
-        sequence_embedding_fp = 'asv_embeddings_large.npy'
-        sequence_embedding_dim = 512
+    sequence_embedding_fp = 'data/input/asv_embeddings.npy'
+    sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
+    sequence_embedding_dim = 768
     
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
@@ -403,9 +389,9 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             rarefy_depth = rarefy_depth,
             scale=1,
             batch_size = 8,
-            gen_new_tables = True, #only in training dataset
-            sequence_embeddings = "asv_embeddings.npy",
-            sequence_labels = "sequence_labels.npy",
+            gen_new_tables = True,
+            sequence_embeddings = sequence_embedding_fp,
+            sequence_labels = sequence_labels_fp,
             upsample=False,
             drop_remainder=False
         )
@@ -420,8 +406,8 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             rarefy_depth = rarefy_depth,
             scale=1,
             batch_size = 8,
-            sequence_embeddings = "asv_embeddings.npy",
-            sequence_labels = "sequence_labels.npy",
+            sequence_embeddings = sequence_embedding_fp,
+            sequence_labels = sequence_labels_fp,
             upsample=False,
             drop_remainder=False,
             rarefy_seed = 42
@@ -431,7 +417,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate)
         else:
             model = tf.keras.models.load_model(model_fp, compile=False)
-        asv_embedding_shape = tf.TensorShape([None, None, 768])
+        asv_embedding_shape = tf.TensorShape([None, None, sequence_embedding_dim])
         count_shape = tf.TensorShape([None, None, 1])
         model.build([asv_embedding_shape, count_shape])
 
@@ -439,7 +425,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             optimizer = tf.keras.optimizers.Adam(
                 learning_rate=tf.keras.optimizers.schedules.CosineDecay(
                 initial_learning_rate = 0.0,
-                warmup_target = learning_rate, # maybe change
+                warmup_target = learning_rate,
                 warmup_steps=0,
                 decay_steps=100_000,
                 ),
@@ -453,7 +439,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             optimizer = tf.keras.optimizers.legacy.SGD(
                 learning_rate=tf.keras.optimizers.schedules.CosineDecay(
                 initial_learning_rate = 0.0,
-                warmup_target = learning_rate, # maybe change
+                warmup_target = learning_rate,
                 warmup_steps=0,
                 decay_steps=100_000,
                 ),
@@ -462,8 +448,6 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=True)
             
         model.compile(optimizer=optimizer, run_eagerly=False)
-        #switch loss to val loss 
-        #pass early stopping for callbacks
         history = model.fit(embed_train, 
                   validation_data = embed_valid, 
                   validation_steps=embed_valid.steps_per_epoch, 
