@@ -19,16 +19,12 @@ def asv_embedding():
     model = AutoModel.from_pretrained("PoetschLab/GROVER", config=config).to(device)
 
     def calc_embedding_mean(asvs):
-        '''
-        input: asv
-        returns: [B, A, E]
-        '''
         inputs = [tokenizer(asv, return_tensors = 'pt')["input_ids"].to(device) for asv in asvs]
         hidden_states = [np.mean(model(input)[0].cpu().detach().numpy(), axis=1) for input in tqdm(inputs)]
         return np.vstack(hidden_states)
     
     embeddings = calc_embedding_mean(table.ids(axis="observation"))
 
-    np.save("asv_embeddings.npy1", embeddings)
-    np.save("asv_embedding_ids.npy1", table.ids(axis="observation"))
+    np.save("data/input/asv_embeddings.npy", embeddings)
+    np.save("data/input/asv_embedding_ids.npy", table.ids(axis="observation"))
     print('GROVER: ASV embeddings and ids saved.')

@@ -3,25 +3,12 @@ if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
 
-from tensorflow import keras as K
 from aam.models.sequence_regressor import SequenceRegressor
-from aam.callbacks import SaveModel
-from keras.callbacks import EarlyStopping
-
-from transformers import AutoTokenizer, AutoModel, BertConfig, logging
-import numpy as np
+from aam.models.sequence_regressor_v2 import SequenceRegressorV2
 import pandas as pd
-import matplotlib.pyplot as plt
-import warnings
-from tqdm import tqdm
+import numpy as np
 from biom import load_table, Table
-from sklearn.model_selection import train_test_split, StratifiedKFold
-import json
-import os
-import sys
-
-warnings.filterwarnings('ignore')
-logging.set_verbosity_error()
+K = tf.keras
 
 class GeneratorDataset(tf.keras.utils.Sequence):
     def __init__(
@@ -48,6 +35,7 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         sequence_labels = None,
         upsample = True,
         drop_remainder = True,
+        num_init_tables = 1,
         rarefy_seed = None
     ):      
         if batch_size % 2 != 0:
@@ -86,6 +74,7 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         self.shuffle = shuffle
         self.epochs = epochs
         self.gen_new_tables = gen_new_tables
+        self.num_init_tables = num_init_tables
         self.samples_per_minibatch = batch_size
         self.batch_size = batch_size
         self.max_bp = max_bp
@@ -103,7 +92,11 @@ class GeneratorDataset(tf.keras.utils.Sequence):
             self.postorder_pos = {n.name: i for i, n in enumerate(self.tree.postorder()) if n.is_tip()}
         print("rarefy table...")
         self.rarefy_seed = rarefy_seed
-        self.rarefied_table: Table = self.table.subsample(rarefy_depth, seed=rarefy_seed)
+        if self.num_init_tables > 1:
+            tables = [self.table.subsample(rarefy_depth, seed=rarefy_seed+i) for i in range(self.num_init_tables)]
+            self.rarefied_table: Table = tables[0].concat(tables[1:])
+        else:
+            self.rarefied_table: Table = self.table.subsample(rarefy_depth, seed=rarefy_seed)
         self.upsample = upsample
         self.size = self.rarefied_table.shape[1]
         self.steps_per_epoch = self.size // self.batch_size
@@ -113,8 +106,8 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         self.sample_weights = self.y_data.copy()
         class_0_p = len(self.sample_weights[self.sample_weights == 0])
         class_1_p = len(self.sample_weights[self.sample_weights == 1])
-        self.sample_weights[self.sample_weights == 0] = len(self.sample_weights) / (2 * class_0_p)
-        self.sample_weights[self.sample_weights == 1] = len(self.sample_weights) / (2 * class_1_p)
+        self.sample_weights[self.sample_weights == 0] = self.sample_weights.size / (2 * class_0_p)
+        self.sample_weights[self.sample_weights == 1] = self.sample_weights.size / (2 * class_1_p)
         self.on_epoch_end()
 
     def __len__(self):
@@ -131,12 +124,14 @@ class GeneratorDataset(tf.keras.utils.Sequence):
             batch_sample_ids = self.sample_ids[sample_indices]
         return self._batch_data(batch_sample_ids)
             
+    
     def _batch_data(self, batch_sample_ids):
         num_unique_asvs, sparse_indices, obs_indices, counts = [], [], [], []
         cur_row_indx = 0
         for s_id in batch_sample_ids:
             sample_data = self.rarefied_table.data(s_id, dense=False).tocoo()
             obs_idx, sample_counts = sample_data.row, sample_data.data
+            # remove zeros
             non_zero_mask = sample_counts > 0.0
             obs_idx = obs_idx[non_zero_mask]
             sample_counts = sample_counts[non_zero_mask]
@@ -150,6 +145,7 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         obs_indices = np.hstack(obs_indices, dtype=np.int32)
         counts = np.hstack(counts, dtype=np.float32)[:, np.newaxis]
         
+        # get list of unique observations in batch
         unique_obs, obs_indices = np.unique(obs_indices, return_inverse=True)
         if self.sequence_embeddings is None:
             lookup = {
@@ -251,21 +247,37 @@ class GeneratorDataset(tf.keras.utils.Sequence):
         print("done preprocessing metadata")
         
 class Classifier(K.Model):
-    def __init__(self, hidden_dim, num_hidden_layers, dropout_rate, **kwargs):
+    def __init__(self, num_hidden_layers, hidden_dim=None, dropout_rate=None, use_cova=False, **kwargs):
         super().__init__(**kwargs)
-
+        
         self.hidden_dim = hidden_dim
         self.num_hidden_layers = num_hidden_layers
         self.dropout_rate = dropout_rate
+        self.use_cova = use_cova
 
-        self.model = SequenceRegressor(hidden_dim=self.hidden_dim, num_hidden_layers=self.num_hidden_layers, dropout_rate=self.dropout_rate, intermediate_activation='gelu', out_dim = 1)
+        if not use_cova:
+            self.model = SequenceRegressor(hidden_dim=hidden_dim, num_hidden_layers=self.num_hidden_layers, dropout_rate=self.dropout_rate, intermediate_activation='gelu', out_dim = 1)
+        else:
+            self.model = SequenceRegressorV2(rarefy_depth=1000)
         self.output_activation = tf.keras.layers.Activation('sigmoid', dtype=tf.float64)
         self.output_activation.build([None, 1])
         self.loss_fn = K.losses.BinaryCrossentropy(from_logits=False, reduction='none')
 
         self.auc_tracker = K.metrics.AUC(from_logits=False)
         self.loss_tracker = K.metrics.Mean()
-
+    
+    def build(self, input_shape):
+        if self.built:
+            return
+        token_shape = tf.TensorShape([None, 768])
+        batch_indicies = tf.TensorShape([None, 2])
+        indicies_shape = tf.TensorShape([None])
+        count_shape = tf.TensorShape([None, 1])
+        self.model.build(
+             [token_shape, batch_indicies, indicies_shape, count_shape]
+        )
+        super(Classifier, self).build(input_shape)
+        
     def call(self, inputs, mask=None, training=False):
         """
         inputs: [B, A, N], B: batch_dim, A: # ASV in sample, N: nuctides,
@@ -294,6 +306,8 @@ class Classifier(K.Model):
     def train_step(self, data):
         x, y = data
 
+        # create attention mask
+        # example [["ACTG"], [""]]
         with tf.GradientTape() as tape:
             sample_embeddings, output = self(x, training=True)
             loss = self.compute_loss(y, output)
@@ -327,21 +341,16 @@ class Classifier(K.Model):
         return predictions, y, correct
     def get_config(self):
         config = super(Classifier, self).get_config()
-        config.update({'build_input_shape': self.get_build_config(), 'hidden_dim': self.hidden_dim, 'num_hidden_layers': self.num_hidden_layers, 'dropout_rate': self.dropout_rate})
+        config.update({'build_input_shape': self.get_build_config(), 'hidden_dim': self.hidden_dim, 'num_hidden_layers': self.num_hidden_layers, 'dropout_rate': self.dropout_rate, 'use_cova': self.use_cova})
         return config
-    def build(self, input_shape):
-        if self.built:
-            return
-        super(Classifier, self).build(input_shape)
     @classmethod
     def from_config(cls, config):
         build_input_shape = config.pop('build_input_shape')
         input_shape = build_input_shape['input_shape']
-        print(input_shape)
         if not 'hidden_dim' in config:
             config['hidden_dim'] = 32
             config['num_hidden_layers'] = 2
             config['dropout_rate'] = 0.1
         model = cls(**config)
-        model.build(input_shape)
         return model
+        
