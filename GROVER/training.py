@@ -40,7 +40,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
     dir_path = f'trained_models_grover/{sample_type}'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-    sequence_embedding_fp = 'data/input/asv_embeddings.npy'
+    sequence_embedding_fp = 'data/input/asv_embeddings_grover.npy'
     sequence_embedding_dim = 768
 
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -67,7 +67,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             batch_size = 4,
             gen_new_tables = True,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = 'data/input/asv_embeddings_ids.npy',
+            sequence_labels = 'data/input/asv_embeddings_ids_grover.npy',
             upsample=False,
             drop_remainder=False
         )
@@ -83,7 +83,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             scale=1,
             batch_size = 4,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = 'data/input/asv_embeddings_ids.npy',
+            sequence_labels = 'data/input/asv_embeddings_ids_grover.npy',
             upsample=False,
             drop_remainder=False,
             rarefy_seed = 42

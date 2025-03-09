@@ -36,7 +36,7 @@ def test_model(test_fp, model_fp, ensemble=False):
     else:
         rarefy_depth = 1000
 
-    sequence_embeddings = 'data/input/asv_embeddings.npy'
+    sequence_embeddings = 'data/input/asv_embeddings_grover.npy'
     gd_test = [GeneratorDataset(
         table='data/input/merged_biom_table.biom',
         metadata=y_test,
@@ -49,7 +49,7 @@ def test_model(test_fp, model_fp, ensemble=False):
         batch_size = 32,
         epochs=1,
         sequence_embeddings = sequence_embeddings,
-        sequence_labels = 'data/input/asv_embeddings_ids.npy',
+        sequence_labels = 'data/input/asv_embeddings_ids_grover.npy',
         upsample=False,
         drop_remainder=False,
         gen_new_table_frequency = 1,

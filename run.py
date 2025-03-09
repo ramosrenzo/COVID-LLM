@@ -1,4 +1,4 @@
-from GROVER.train import train_model
+from GROVER.training import train_model
 from GROVER.test import test_model
 from GROVER.plot_auroc_auprc import plot_auroc_auprc
 
