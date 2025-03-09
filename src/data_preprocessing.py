@@ -47,7 +47,6 @@ def preprocess_data():
     # read the names of each sample into a array
     with open("data/input/training_samples.txt", "r") as f:
         samples_train = [s.strip() for s in f.readlines()]
-    samples_train
     
     # write txt file  with names of sample used for testing
     with open("data/input/test_samples.txt", "w") as f:
@@ -57,7 +56,6 @@ def preprocess_data():
     # read the names of each sample into a array
     with open("data/input/test_samples.txt", "r") as f:
         samples_test = [s.strip() for s in f.readlines()]
-    samples_test
     
     def check_covid_positive(row):
         return int(row =='positive')
@@ -73,7 +71,7 @@ def preprocess_data():
     training_data.to_csv("data/input/training_metadata.tsv", sep="\t", index=False)
     test_data.to_csv("data/input/test_metadata.tsv", sep="\t", index=False)
 
-    # get training metadata per sample
+    # get training metadata per sample environment
     training_metadata = pd.read_csv('data/input/training_metadata.tsv', sep="\t")
     training_metadata_inside_floor = training_metadata[training_metadata['study_sample_type'] == 'inside floor']
     training_metadata_forehead = training_metadata[training_metadata['study_sample_type'] == 'forehead']
@@ -84,7 +82,7 @@ def preprocess_data():
     training_metadata_stool.to_csv("data/input/training_metadata_stool.tsv", sep="\t", index=False)
     training_metadata_nares.to_csv("data/input/training_metadata_nares.tsv", sep="\t", index=False)
 
-    # get training metadata per sample
+    # get training metadata per sample environment
     test_metadata = pd.read_csv('data/input/test_metadata.tsv', sep="\t")
     test_metadata_inside_floor = test_metadata[test_metadata['study_sample_type'] == 'inside floor']
     test_metadata_forehead = test_metadata[test_metadata['study_sample_type'] == 'forehead']

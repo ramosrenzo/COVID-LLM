@@ -5,12 +5,17 @@ import sys
 
 if __name__ == "__main__":
     try:
-        target = sys.argv[1]
+        model = sys.argv[1]
+        target = sys.argv[2]
+        
         if target not in ['samples', 'embedding', 'all']:
             raise Exception("Incorrect target name. Available targets: 'samples', 'embedding', and 'all'")
+        
         if target in ['samples', 'all']:
             preprocess_data()
+        
         if target in ['embedding', 'all']:
-            asv_embedding()
+            if model == 'dnabert-2':
+                asv_embedding()
     except Exception as e:
         print(f"An error occurred during the process: {e}")

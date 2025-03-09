@@ -3,14 +3,14 @@ from sklearn.metrics import roc_curve, auc, precision_recall_curve
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_auroc_auprc(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions):    
+def plot_auroc_auprc(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions):   
     sample_data = {
         "Nares": nares_predictions[0],
         "Forehead": forehead_predictions[0],
         "Stool": stool_predictions[0],
         "Inside floor": inside_floor_predictions[0],
     }
-
+ 
     # set up
     palette = ["#dc9766", "#d32f88", "#914f1f", "#bf64d7"]
     colors = sns.color_palette(palette)
@@ -56,4 +56,4 @@ def plot_auroc_auprc(nares_predictions, forehead_predictions, stool_predictions,
     plt.tight_layout()
     plt.subplots_adjust(wspace=0.3)
     
-    plt.savefig('figures/auroc_auprc_dnabert_2.png')
+    plt.savefig('figures/auroc_auprc_aam.png')
