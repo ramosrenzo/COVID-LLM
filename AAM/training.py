@@ -76,7 +76,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
                 batch_size = 4,
                 gen_new_tables = True, #only in training dataset
                 sequence_embeddings = sequence_embedding_fp,
-                sequence_labels = 'data/input/asv_embeddings_ids_aam.npy',
+                sequence_labels = 'data/input/asv_embeddings_ids.npy',
                 upsample=False,
                 drop_remainder=False
             )
@@ -93,7 +93,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
                 epochs=100000,
                 batch_size = 4,
                 sequence_embeddings = sequence_embedding_fp,
-                sequence_labels = 'data/input/asv_embeddings_ids_aam.npy',
+                sequence_labels = 'data/input/asv_embeddings_ids.npy',
                 upsample=False,
                 drop_remainder=False,
                 rarefy_seed = 42
