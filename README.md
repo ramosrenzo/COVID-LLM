@@ -7,7 +7,7 @@ git clone https://github.com/ramosrenzo/COVID-LLM.git
 cd COVID-LLM
 ```
 
-## Run AAM, DNABERT, DNABERT-2, and GROVER
+## AAM, DNABERT, DNABERT-2, and GROVER
 Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
 
 ### Setup Environment
@@ -35,21 +35,38 @@ pip uninstall triton
 ```
 
 ### Run Data Preprocessing and Get Embeddings
-The build script `run_data.py` handles sample data preprocessing and generates embeddings from DNABERT-2. Data is stored in the `data/input` folder. Use a target argument to specify which stage of the pipeline to execute:
+The build script `run_data.py` handles sample data preprocessing and generates embeddings from the large language models. Data is stored in the `data/input` folder. Use a target argument to specify which model to run:
+- `dnabert` - Runs DNABERT.
+
+- `dnabert-2` – Runs DNABERT-2.
+
+- `grover` – Runs GROVER.
+
+Use a second target argument to specify which stage of the pipeline to execute:
+
 - `all` - Preprocesses sample data and generates embeddings from DNABERT-2.
 
 - `samples` – Preprocesses sample data.
 
 - `embedding` – Generates embeddings from DNABERT-2.
 
-Run the build script with one target:
+Run the build script with two targets:
 
 ```python
-python run_data.py <target>
+python run_data.py <target_1> <target_2>
 ```
 
 ### Run Classifier
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_dnabert_2` folder and plots are stored in the `figures` folder. Use a target argument to specify which stage of the pipeline to execute:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_<model>` folder and plots are stored in the `figures` folder. Use a target argument to specify which model to run:
+- `aam` - Runs AAM.
+
+- `dnabert` - Runs DNABERT.
+
+- `dnabert-2` – Runs DNABERT-2.
+
+- `grover` – Runs GROVER.
+
+Use a second target argument to specify which stage of the pipeline to execute:
 
 - `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
 
@@ -57,8 +74,8 @@ The build script `run.py` handles training, testing, and plotting of AUROC and A
 
 - `test` – Runs testing and plots AUROC and AUPRC.
 
-Run the build script with one target:
+Run the build script with two targets:
 
 ```python
-python run.py <target>
+python run.py <target_1> <target_2>
 ```
