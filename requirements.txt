@@ -6,9 +6,8 @@ scipy
 statsmodels
 biopython
 pandas
-# pybedtools
-# sentencepiece==0.1.91
-
+matplotlib
+keras-tuner
 einops==0.6.1
 transformers==4.29.2
 peft==0.3.0
