@@ -40,7 +40,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
     dir_path = f'trained_models_dnabert_2/{sample_type}'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-    sequence_embedding_fp = 'data/input/asv_embeddings.npy'
+    sequence_embedding_fp = 'data/input/asv_embeddings_dnabert_2.npy'
     sequence_embedding_dim = 768
 
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -55,6 +55,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             rarefy_depth = 4000
         else:
             rarefy_depth = 1000
+        
         dataset_train = GeneratorDataset(
             table='data/input/merged_biom_table.biom',
             metadata=y_train,

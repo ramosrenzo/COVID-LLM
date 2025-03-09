@@ -4,16 +4,10 @@ Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LL
 ## Clone the Repository
 ```python
 git clone https://github.com/ramosrenzo/COVID-LLM.git
-```
-
-## Checkout DNABERT-2 branch
-```python
 cd COVID-LLM
-
-git checkout dnabert-2
 ```
 
-## DNABERT-2
+## Run AAM, DNABERT, DNABERT-2, and GROVER
 Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
 
 ### Setup Environment

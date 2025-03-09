@@ -6,7 +6,7 @@ from biom import load_table, Table
 
 def asv_embedding():
     '''
-    Saves the ASV embeddings of DNABERT-2 to a file in the data folder called 'asv_embeddings.npy'.
+    Saves the ASV embeddings of DNABERT-2 to a file in the data folder called 'asv_embeddings_dnabert_2.npy'.
     '''
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
@@ -28,5 +28,5 @@ def asv_embedding():
         embeddings.append(calc_embedding_mean([asv]))
     embeddings = np.array(embeddings).reshape((61974, 768))
     
-    np.save("data/input/asv_embeddings.npy", embeddings)
+    np.save("data/input/asv_embeddings_dnabert_2.npy", embeddings)
     print(f'DNABERT-2: ASV embeddings saved.')

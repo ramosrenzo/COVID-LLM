@@ -36,10 +36,7 @@ def test_model(test_fp, model_fp, ensemble=False):
     else:
         rarefy_depth = 1000
 
-    if 'large' in model_fp:
-        sequence_embeddings = 'data/input/asv_embeddings_large.npy'
-    else:
-        sequence_embeddings = 'data/input/asv_embeddings.npy'
+    sequence_embeddings = 'data/input/asv_embeddings_dnabert_2.npy'
     gd_test = [GeneratorDataset(
         table='data/input/merged_biom_table.biom',
         metadata=y_test,
