@@ -57,7 +57,7 @@ python run_data.py <target>
 ### Run Classifier
 The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_dnabert_2` folder and plots are stored in the `figures` folder. Use a target argument to specify which stage of the pipeline to execute:
 
-- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
+- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the test target separately.
 
 - `training` – Runs the training process.
 
