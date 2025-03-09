@@ -1,3 +1,4 @@
+from DNABERT.asv_embedding import asv_embedding as asv_embedding_dnabert
 from DNABERT_2.asv_embedding import asv_embedding as asv_embedding_dnabert_2
 from GROVER.asv_embedding import asv_embedding as asv_embedding_grover
 from src.data_preprocessing import preprocess_data
@@ -21,6 +22,8 @@ if __name__ == "__main__":
             preprocess_data()
         
         if target in ['embedding', 'all']:
+            if model == 'dnabert':
+                asv_embedding_dnabert()
             if model == 'dnabert-2':
                 asv_embedding_dnabert_2()
             if model == 'grover':

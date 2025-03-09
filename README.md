@@ -2,8 +2,9 @@
 Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
 
 ## Clone the Repository
-Note: Our work was run on a Linux Virtual Machine with 64GB of CPU memory and a NVIDIA 2080 Ti GPU. We used <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git Large File Storage (LFS)</a> to upload our AAM, DNABERT, DNABERT-2, and GROVER embeddings, along with trained Keras models. Please ensure Git LFS is installed. Alternatively, you can preprocess the data and generate embeddings locally using the `run_data.py` script.
+Our work was run on a Linux Virtual Machine with 64GB of CPU memory and a NVIDIA 2080 Ti GPU. We used <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git Large File Storage (LFS)</a> to upload our AAM, DNABERT, DNABERT-2, and GROVER embeddings, along with trained Keras models. Please ensure Git LFS is installed. Alternatively, you can preprocess the data and generate embeddings locally using the `run_data.py` script.
 
+Clone the repository:
 ```python
 git clone https://github.com/ramosrenzo/COVID-LLM.git
 cd COVID-LLM
