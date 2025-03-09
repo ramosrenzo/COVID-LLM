@@ -14,6 +14,7 @@ git checkout dnabert-2
 ```
 
 ## DNABERT-2
+Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
 
 ### Setup Environment
 
@@ -40,26 +41,21 @@ pip uninstall triton
 ```
 
 ### Run Model
-Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
-
-The build script `run_embedding.py` stores embeddings from DNABERT-2 in the `data/input` folder:
+The build script `run_embedding.py` generates and stores embeddings from DNABERT-2 in the `data/input` folder. Run it with:
 
 ```python
 python run_embedding.py
 ```
+The build script `run.py` handles training, testing, and plotting AUROC and AUPRC scores. Use a target argument to specify which part of the pipeline to execute:
 
-The build script`run.py` runs the training, testing, and plotting for AUROC and AUPRC.
-Specify which part of the pipeline to run with a target:
+- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
 
-`all` runs the training, test, and plotting for AUROC and AUPRC. If your system runs out of memory during the test, then run the `test` target on its own.
+- `training` – Runs only the training process.
 
-`training` runs the training.
+- `test` – Runs testing and plots AUROC and AUPRC.
 
-`test` runs the test and plotting for AUROC and AUPRC.
-
-<br />
-<br />
 Run the build script with one target:
+
 ```python
 python run.py <target>
 ```
