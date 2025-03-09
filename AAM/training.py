@@ -45,7 +45,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         if not large:
-            sequence_embedding_fp = 'data/input/asv_embeddings.npy'
+            sequence_embedding_fp = 'data/input/asv_embeddings_aam.npy'
             sequence_embedding_dim = 256
         else:
             sequence_embedding_fp = 'data/input/asv_embeddings_large.npy'
@@ -76,7 +76,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
                 batch_size = 4,
                 gen_new_tables = True, #only in training dataset
                 sequence_embeddings = sequence_embedding_fp,
-                sequence_labels = 'data/input/asv_embeddings_ids.npy',
+                sequence_labels = 'data/input/asv_embeddings_ids_aam.npy',
                 upsample=False,
                 drop_remainder=False
             )
@@ -93,7 +93,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
                 epochs=100000,
                 batch_size = 4,
                 sequence_embeddings = sequence_embedding_fp,
-                sequence_labels = 'data/input/asv_embeddings_ids.npy',
+                sequence_labels = 'data/input/asv_embeddings_ids_aam.npy',
                 upsample=False,
                 drop_remainder=False,
                 rarefy_seed = 42
