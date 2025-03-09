@@ -41,16 +41,23 @@ pip uninstall triton
 ```
 
 ### Run Model
-The build script `run_embedding.py` generates and stores embeddings from DNABERT-2 in the `data/input` folder. Run it with:
+The build script `run_data.py` handles sample data preprocessing and generates embeddings from DNABERT-2. Data is stored in the `data/input` folder. Use a target argument to specify which stage of the pipeline to execute:
+- `all` - Preprocesses sample data and generates embeddings from DNABERT-2.
+
+- `samples` – Preprocesses sample data.
+
+- `embedding` – Generates embeddings from DNABERT-2.
+
+Run the build script with one target:
 
 ```python
-python run_embedding.py
+python run_data.py <target>
 ```
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Use a target argument to specify which part of the pipeline to execute:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores. Trained models are stored in the `trained_models_dnabert_2` folder and plots are stored in the `figures` folder. Use a target argument to specify which stage of the pipeline to execute:
 
 - `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
 
-- `training` – Runs only the training process.
+- `training` – Runs the training process. Trained models are stored in the `trained_models_dnabert_2` folder.
 
 - `test` – Runs testing and plots AUROC and AUPRC.
 
