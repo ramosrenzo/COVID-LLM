@@ -35,7 +35,7 @@ pip uninstall triton
 ```
 
 ### Run Data Preprocessing and Get Embeddings
-The build script `run_data.py` handles sample data preprocessing and generates embeddings from the large language models. Data is stored in the `data/input` folder. Use a target argument to specify which model to run:
+The build script `run_data.py` handles data preprocessing and generates embeddings from the large language models. Data is stored in the `data/input` folder. Use a target argument to specify which model to run:
 - `dnabert` - Runs DNABERT.
 
 - `dnabert-2` – Runs DNABERT-2.
@@ -68,7 +68,7 @@ The build script `run.py` handles training, testing, and plotting of AUROC and A
 
 Use a second target argument to specify which stage of the pipeline to execute:
 
-- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
+- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the test target separately.
 
 - `training` – Runs the training process.
 
