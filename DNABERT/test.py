@@ -34,7 +34,7 @@ def test_model(test_fp, model_fp, ensemble=False):
     sequence_embedding_fp = 'data/input/asv_embeddings.npy'
     sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
 
-    embed_test = [GeneratorDataset(
+    gd_test = [GeneratorDataset(
         table='data/input/merged_biom_table.biom',
         metadata=y_test,
         metadata_column='has_covid',
@@ -57,7 +57,7 @@ def test_model(test_fp, model_fp, ensemble=False):
     
     if '.keras' in model_fp:
         model=tf.keras.models.load_model(model_fp, compile=False)
-        predictions = [model.predict(ds, steps=ds.steps_per_epoch) for ds in embed_test]
+        predictions = [model.predict(ds, steps=ds.steps_per_epoch) for ds in gd_test]
         y_pred, y_true = [], []
         for y_p, y_t, _ in predictions:
             y_pred.append(y_p)
@@ -70,7 +70,7 @@ def test_model(test_fp, model_fp, ensemble=False):
         models = [tf.keras.models.load_model(f'{model_fp}/{sample_type}_{i}_model.keras', compile=False) for i in range(5)]
         predictions = []
         for model in models:
-            predictions.append([model.predict(ds, steps=ds.steps_per_epoch) for ds in embed_test])
+            predictions.append([model.predict(ds, steps=ds.steps_per_epoch) for ds in gd_test])
         ensemble_y_pred, ensemble_y_true = [], []
         for model_predictions in predictions:
             y_pred, y_true = [], []

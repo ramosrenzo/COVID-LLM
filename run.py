@@ -1,17 +1,15 @@
-from DNABERT.asv_embedding import asv_embedding
-from DNABERT.train import train_model
+from DNABERT.training import train_model
 from DNABERT.test import test_model
 from DNABERT.plot_auroc_auprc import plot_auroc_auprc
 import sys
 
 if __name__ == "__main__":
     try:
-        asv_embedding()
         target = sys.argv[1]
-        if target not in ['train', 'test', 'all']:
-            raise Exception("Incorrect target name. Available targets: 'embedding', 'train', 'test', and 'all'")
+        if target not in ['training', 'test', 'all']:
+            raise Exception("Incorrect target name. Available targets: 'embedding', 'training', 'test', and 'all'")
             
-        if target in ['train', 'all']:
+        if target in ['training', 'all']:
             train_model(train_fp ='data/input/training_metadata_forehead.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0, learning_rate=0.0001, beta_1=0.9, beta_2=0.99, weight_decay=0.0001)
             train_model(train_fp ='data/input/training_metadata_inside_floor.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.0001, beta_1=0.9, beta_2=0.999, weight_decay=0.0001)
             train_model(train_fp ='data/input/training_metadata_nares.tsv', large=False, opt_type='adam', hidden_dim=768, num_hidden_layers=10, dropout_rate=0.1, learning_rate=0.001, beta_1=0.5, beta_2=0.999, weight_decay=0.0001)

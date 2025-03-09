@@ -25,7 +25,8 @@ def get_sample_type(file_path):
         return sample_type
     return "Unknown"
 
-def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, beta_1=None, beta_2=None, weight_decay=None, model_fp=None):
+
+def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, use_cova=False, beta_1=None, beta_2=None, weight_decay=None):
     training_metadata = pd.read_csv(train_fp, sep='\t', index_col=0)
     X = training_metadata.drop(columns=['study_sample_type', 'has_covid'], axis=1)
     y = training_metadata[['study_sample_type', 'has_covid']]
@@ -52,7 +53,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
         else:
             rarefy_depth = 1000
     
-        embed_train = GeneratorDataset(
+        gd_train = GeneratorDataset(
             table='data/input/merged_biom_table.biom',
             metadata=y_train,
             metadata_column='has_covid',
@@ -69,7 +70,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             drop_remainder=False
         )
     
-        embed_valid = GeneratorDataset(
+        gd_valid = GeneratorDataset(
             table='data/input/merged_biom_table.biom',
             metadata=y_valid,
             metadata_column='has_covid',
@@ -121,11 +122,11 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=True)
             
         model.compile(optimizer=optimizer, run_eagerly=False)
-        history = model.fit(embed_train, 
-                  validation_data = embed_valid, 
-                  validation_steps=embed_valid.steps_per_epoch, 
+        history = model.fit(gd_train, 
+                  validation_data = gd_valid, 
+                  validation_steps=gd_valid.steps_per_epoch, 
                   epochs=10_000,
-                  steps_per_epoch=embed_train.steps_per_epoch, 
+                  steps_per_epoch=gd_train.steps_per_epoch, 
                   callbacks=[
                       early_stop
                    ])
