@@ -1,27 +1,16 @@
 import tensorflow as tf
-gpus = tf.config.list_physical_devices("GPU")
-tf.config.experimental.set_memory_growth(gpus[0], True)
+if tf.config.list_physical_devices("GPU"):
+    gpus = tf.config.list_physical_devices("GPU")
+    tf.config.experimental.set_memory_growth(gpus[0], True)
 
-from tensorflow import keras as K
 from aam.models.sequence_regressor import SequenceRegressor
-from aam.callbacks import SaveModel
-from keras.callbacks import EarlyStopping
-
-from transformers import AutoTokenizer, AutoModel, BertConfig, logging
-import numpy as np
+from aam.models.sequence_regressor_v2 import SequenceRegressorV2
 import pandas as pd
-import matplotlib.pyplot as plt
-import warnings
-from tqdm import tqdm
+import numpy as np
 from biom import load_table, Table
-from sklearn.model_selection import train_test_split, StratifiedKFold
-import json
-import os
+K = tf.keras
 
-warnings.filterwarnings('ignore')
-logging.set_verbosity_error()
-
-class GeneratorEmbedding(tf.keras.utils.Sequence):
+class GeneratorDataset(tf.keras.utils.Sequence):
     def __init__(
         self,
         table = None,
@@ -42,19 +31,41 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
         return_sample_ids=False,
         tree_path=None,
         seed=None,
-        asv_embeddings_fp=None
+        sequence_embeddings = None,
+        sequence_labels = None,
+        upsample = True,
+        drop_remainder = True,
+        num_init_tables = 1,
+        rarefy_seed = None
     ):      
+        if batch_size % 2 != 0:
+            raise Exception("Batch size must be even")
+            
         if isinstance(table, str):
             table = load_table(table)
+        if sequence_embeddings == None:
+            raise Exception("Must pass in sequence embeddings")
+        if sequence_labels == None:
+            raise Exception("Must pass in sequence labels")
         self.table: Table = table
         self.tree_path = tree_path
         self.is_categorical: bool = is_categorical
-        asv_embeddings = np.load(asv_embeddings_fp)
         obs_ids = self.table.ids(axis="observation")
-        self.asv_embeddings_dict = {k:v for k,v in zip(obs_ids, asv_embeddings)}
         self.metadata_column: str = metadata_column
         self.shift = shift
         self.scale = scale
+        self.sequence_embeddings = sequence_embeddings
+        self.sequence_labels = sequence_labels
+        if self.sequence_embeddings is not None:
+            emb = np.load(self.sequence_embeddings)
+            emb_mean = np.mean(emb, axis=0)
+            emb_std = np.std(emb, axis=0)
+            self.sequence_embeddings = (emb - emb_mean) / (emb_std + 1e-8)
+            self.sequence_labels = np.load(self.sequence_labels, allow_pickle=True)
+            self.sequence_labels = self.sequence_labels.astype(np.str_)
+            self.sequence_labels = np.char.encode(
+                self.sequence_labels, encoding="utf-8"
+            )
         self.metadata: pd.Series = metadata
         self.rarefy_depth: int = rarefy_depth
         self.max_token_per_sample: int = max_token_per_sample
@@ -63,6 +74,7 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
         self.shuffle = shuffle
         self.epochs = epochs
         self.gen_new_tables = gen_new_tables
+        self.num_init_tables = num_init_tables
         self.samples_per_minibatch = batch_size
         self.batch_size = batch_size
         self.max_bp = max_bp
@@ -79,21 +91,44 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
             self.tree = to_skbio_treenode(parse_newick(open(self.tree_path).read()))
             self.postorder_pos = {n.name: i for i, n in enumerate(self.tree.postorder()) if n.is_tip()}
         print("rarefy table...")
-        self.rarefied_table: Table = self.table.subsample(rarefy_depth)
+        self.rarefy_seed = rarefy_seed
+        if self.num_init_tables > 1:
+            tables = [self.table.subsample(rarefy_depth, seed=rarefy_seed+i) for i in range(self.num_init_tables)]
+            self.rarefied_table: Table = tables[0].concat(tables[1:])
+        else:
+            self.rarefied_table: Table = self.table.subsample(rarefy_depth, seed=rarefy_seed)
+        self.upsample = upsample
         self.size = self.rarefied_table.shape[1]
         self.steps_per_epoch = self.size // self.batch_size
-        self.y_data = self.metadata.loc[self._rarefied_table.ids()]
+        if not drop_remainder and (self.steps_per_epoch * self.batch_size) != self.size:
+            self.steps_per_epoch += 1
+        self.y_data = self.metadata.loc[self._rarefied_table.ids(), self.metadata_column]
+        self.sample_weights = self.y_data.copy()
+        class_0_p = len(self.sample_weights[self.sample_weights == 0])
+        class_1_p = len(self.sample_weights[self.sample_weights == 1])
+        self.sample_weights[self.sample_weights == 0] = self.sample_weights.size / (2 * class_0_p)
+        self.sample_weights[self.sample_weights == 1] = self.sample_weights.size / (2 * class_1_p)
+        # self.sample_weights = [class_0_p, class_1_p]
         self.on_epoch_end()
 
     def __len__(self):
         return self.steps_per_epoch
     
     def __getitem__(self, idx):
-        start = idx * self.batch_size
-        end = start + self.batch_size
-        sample_indices = self.sample_indices[start:end]
-        batch_sample_ids = self.sample_ids[sample_indices]
+        # start = idx * self.batch_size
+        # end = start + self.batch_size
+        # sample_indices = self.sample_indices[start:end]
+        # batch_sample_ids = self.sample_ids[sample_indices]
+        if self.upsample == True:
+            batch_metadata = self.metadata.groupby(self.metadata_column).sample(self.batch_size//2, replace=True)
+            batch_sample_ids = batch_metadata.index.to_numpy()
+        else:
+            start = idx * self.batch_size
+            end = start + self.batch_size
+            sample_indices = self.sample_indices[start:end]
+            batch_sample_ids = self.sample_ids[sample_indices]
         return self._batch_data(batch_sample_ids)
+            
     
     def _batch_data(self, batch_sample_ids):
         num_unique_asvs, sparse_indices, obs_indices, counts = [], [], [], []
@@ -117,26 +152,32 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
         
         # get list of unique observations in batch
         unique_obs, obs_indices = np.unique(obs_indices, return_inverse=True)
-        obs = self.rarefied_table.ids(axis="observation")
-        asvs = obs[unique_obs]
-        y_true = self.y_data.loc[batch_sample_ids].to_numpy()[:, np.newaxis]
-        asvs_array = np.array([self.asv_embeddings_dict[asv] for asv in asvs])
-        batch_embeddings, counts = self.batch_embeddings(asvs_array, sparse_indices, counts, obs_indices)
-        return (batch_embeddings, counts), y_true
+        if self.sequence_embeddings is None:
+            lookup = {
+            "a": 1,
+            "c": 2,
+            "g": 3,
+            "t": 4,
+            }
+
+            def map(asv):
+                asv = asv.lower()
+                return np.array([lookup[c] for c in asv], dtype=np.int32)[np.newaxis, :]
     
-    def batch_embeddings(self, asv_embeddings, batch_indicies, counts, asv_indices=None):
-        emb_dim = tf.shape(asv_embeddings)[-1]
-        if asv_indices is not None:
-            asv_embeddings = tf.gather(asv_embeddings, asv_indices)
-        batch_shape = tf.reduce_max(batch_indicies[:, 0]) + 1
-        max_unique = tf.reduce_max(batch_indicies[:, 1]) + 1
-        batch_embeddings = tf.scatter_nd(
-            batch_indicies, asv_embeddings, shape=[batch_shape, max_unique, emb_dim]
-        )
-        counts = tf.scatter_nd(
-            batch_indicies, counts, shape=[batch_shape, max_unique, 1]
-        )
-        return batch_embeddings.numpy(), counts.numpy()
+            tokens = np.concatenate(
+            [map(asv) for asv in self.asv_ids[unique_obs]], axis=0
+            )
+        else:
+            asvs, asv_ids_idx, sequence_labels_idx = np.intersect1d(
+            self.asv_ids[unique_obs],
+            self.sequence_labels,
+            assume_unique=True,
+            return_indices=True,
+            )
+            tokens = self.sequence_embeddings[sequence_labels_idx]
+        y_true = self.y_data.loc[batch_sample_ids].to_numpy()[:, np.newaxis]
+        sample_weights = self.sample_weights.loc[batch_sample_ids].to_numpy()[:, np.newaxis]
+        return (tokens, sparse_indices, obs_indices, counts), (y_true, sample_weights)
         
     def sort_using_counts(self, tensor, counts):
         sorted_indices = tf.argsort(tf.squeeze(counts, axis=-1), axis=1, direction="DESCENDING")
@@ -169,6 +210,7 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
                 return obs[sorted_indices]
             self._rarefied_table = self._rarefied_table.sort(sort_obs, axis="observation")
         self.sample_ids = self._rarefied_table.ids()
+        self._metadata = self.metadata.loc[self.sample_ids]
         self.asv_ids = self._rarefied_table.ids(axis="observation")
         self.sample_indices = np.arange(len(self.sample_ids))
         print("creating encoder target...")
@@ -202,35 +244,70 @@ class GeneratorEmbedding(tf.keras.utils.Sequence):
         samp_ids = np.intersect1d(self.table.ids(axis="sample"), metadata.index)
         self.table.filter(samp_ids, axis="sample", inplace=True)
         self.table.remove_empty()
-        metadata = metadata.loc[self.table.ids(), self.metadata_column]
+        metadata = metadata.loc[self.table.ids(), [self.metadata_column]]
         print(f"aligned table shape: {self.table.shape}")
         print(f"aligned metadata shape: {metadata.shape}")
         metadata = metadata.astype(np.int32)
         self._metadata = metadata.reindex(self.table.ids())
         print("done preprocessing metadata")
-
+        
 class Classifier(K.Model):
-    def __init__(self, **kwargs):
+    def __init__(self, num_hidden_layers, hidden_dim=None, dropout_rate=None, use_cova=False, **kwargs):
         super().__init__(**kwargs)
+        
+        self.hidden_dim = hidden_dim
+        self.num_hidden_layers = num_hidden_layers
+        self.dropout_rate = dropout_rate
+        self.use_cova = use_cova
 
-        self.model = SequenceRegressor(
-            2048, dropout_rate=0.1, embedding_dim = 768, intermediate_size = 3072, 
-            intermediate_activation = "gelu", use_residual_connections = False, out_dim = 1
-        )
+        if not use_cova:
+            self.model = SequenceRegressor(hidden_dim=hidden_dim, num_hidden_layers=self.num_hidden_layers, dropout_rate=self.dropout_rate, intermediate_activation='gelu', out_dim = 1)
+        else:
+            self.model = SequenceRegressorV2(rarefy_depth=1000)
+        self.output_activation = tf.keras.layers.Activation('sigmoid', dtype=tf.float64)
+        self.output_activation.build([None, 1])
+        self.loss_fn = K.losses.BinaryCrossentropy(from_logits=False, reduction='none')
 
-        self.loss_fn = K.losses.BinaryCrossentropy(from_logits=True)
-
-        self.auc_tracker = K.metrics.AUC(from_logits=True)
+        self.auc_tracker = K.metrics.AUC(from_logits=False)
         self.loss_tracker = K.metrics.Mean()
-
+    
+    def build(self, input_shape):
+        if self.built:
+            return
+        token_shape = tf.TensorShape([None, 768])
+        batch_indicies = tf.TensorShape([None, 2])
+        indicies_shape = tf.TensorShape([None])
+        count_shape = tf.TensorShape([None, 1])
+        self.model.build(
+             [token_shape, batch_indicies, indicies_shape, count_shape]
+        )
+        super(Classifier, self).build(input_shape)
+        
     def call(self, inputs, mask=None, training=False):
         """
         inputs: [B, A, N], B: batch_dim, A: # ASV in sample, N: nuctides,
         string tensor
         """
-        return self.model(inputs, training=training)
+        sample_embeddings, output = self.model(inputs, training=training)
+        return sample_embeddings, self.output_activation(output)
 
+    def compute_loss(self, y, y_pred):
+        y_true, sample_weights = y
+        y_true = tf.reshape(y_true, shape=[-1])
+        y_pred = tf.reshape(y_pred, shape=[-1])
+        sample_weights = tf.reshape(sample_weights, shape=[-1])
+        sample_weights = tf.cast(sample_weights, dtype=tf.float64)
+        loss = self.loss_fn(y_true, y_pred)
+        return tf.reduce_mean(loss * sample_weights)
 
+    def compute_metric(self, y, y_pred):
+        y_true, sample_weights = y
+        y_true = tf.reshape(y_true, shape=[-1])
+        y_pred = tf.reshape(y_pred, shape=[-1])
+        sample_weights = tf.reshape(sample_weights, shape=[-1])
+        sample_weights = tf.cast(sample_weights, dtype=tf.float64)
+        self.auc_tracker.update_state(y_true, y_pred)
+        
     def train_step(self, data):
         x, y = data
 
@@ -238,158 +315,47 @@ class Classifier(K.Model):
         # example [["ACTG"], [""]]
         with tf.GradientTape() as tape:
             sample_embeddings, output = self(x, training=True)
-            loss = self.loss_fn(y, output)
+            loss = self.compute_loss(y, output)
 
         gradients = tape.gradient(loss, self.trainable_variables)
         self.optimizer.apply_gradients(zip(gradients, self.trainable_variables))
         self.loss_tracker.update_state(loss)
-        self.auc_tracker.update_state(y, output)
+        self.compute_metric(y, output)
         return {"loss": self.loss_tracker.result(), "auc": self.auc_tracker.result()}
 
     def test_step(self, data):
         x, y = data
         sample_embeddings, output = self(x, training=False)
-        loss = self.loss_fn(y, output)
+        loss = self.compute_loss(y, output)
 
         self.loss_tracker.update_state(loss)
-        self.auc_tracker.update_state(y, output)
+        self.compute_metric(y, output)
 
         return {"loss": self.loss_tracker.result(), "auc": self.auc_tracker.result()}
 
     def predict_step(self, data):
         x, y = data
+        y, _ = y
         sample_embeddings, output = self(x, training=False)
-        predictions = tf.reshape(tf.keras.activations.sigmoid(output), shape=[-1])
+        predictions = tf.reshape(output, shape=[-1])
         y = tf.reshape(y, shape=[-1])
-        y = tf.cast(y, dtype=tf.float32)
-        pred_label = tf.cast(predictions >= 0.5, dtype=tf.float32)
-        correct = tf.reshape(tf.cast(pred_label == y, dtype=tf.float32), shape=[-1])
+        y = tf.cast(y, dtype=tf.float64)
+        pred_label = tf.cast(predictions >= 0.5, dtype=tf.float64)
+        correct = tf.reshape(tf.cast(pred_label == y, dtype=tf.float64), shape=[-1])
         correct = tf.reduce_mean(correct, axis=0)
-        return pred_label, y, correct
-    
+        return predictions, y, correct
     def get_config(self):
         config = super(Classifier, self).get_config()
-        config.update({'build_input_shape': self.get_build_config()})
+        config.update({'build_input_shape': self.get_build_config(), 'hidden_dim': self.hidden_dim, 'num_hidden_layers': self.num_hidden_layers, 'dropout_rate': self.dropout_rate, 'use_cova': self.use_cova})
         return config
-    
-    def build(self, input_shape):
-        if self.built:
-            return
-        super(Classifier, self).build(input_shape)
-    
     @classmethod
     def from_config(cls, config):
         build_input_shape = config.pop('build_input_shape')
         input_shape = build_input_shape['input_shape']
-        config['feature_extractor'] = tf.keras.saving.deserialize_keras_object(config['feature_extractor'])
+        if not 'hidden_dim' in config:
+            config['hidden_dim'] = 32
+            config['num_hidden_layers'] = 2
+            config['dropout_rate'] = 0.1
         model = cls(**config)
-        model.build(input_shape)
         return model
-    
-def get_sample_type(file_path):
-    filename = os.path.basename(file_path)
-    # Remove the 'training_metadata_' prefix and the file extension
-    if filename.startswith('training_metadata_'):
-        sample_type = filename[len('training_metadata_'):]
-        sample_type = os.path.splitext(sample_type)[0]
-        return sample_type
-    return "Unknown"
-    
-#function that creates training and valid split and trains each model
-def train_model(train_fp, model=None):
-    print()
-    training_metadata = pd.read_csv(train_fp, sep='\t', index_col=0)
-    X = training_metadata.drop(columns=['study_sample_type', 'has_covid'], axis=1)
-    y = training_metadata[['study_sample_type', 'has_covid']]
-    
-    _, _, y_train, y_valid = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
-
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-
-    curr_best_val_loss = np.inf
-    curr_best_model = None
-    for i, (train_index, valid_index) in enumerate(skf.split(y, y['has_covid'])):
-        y_train = y.iloc[train_index]
-        y_valid = y.iloc[valid_index]
-    
-        embed_train = GeneratorEmbedding(
-            table='data/input/merged_biom_table.biom',
-            metadata=y_train,
-            metadata_column='has_covid',
-            shuffle=False,
-            is_categorical=False,
-            shift=0,
-            rarefy_depth = 4000,
-            scale=1,
-            batch_size = 4,
-            gen_new_tables = True, #only in training dataset
-            asv_embeddings_fp = "asv_embeddings.npy"
-            
-        )
-    
-        embed_valid = GeneratorEmbedding(
-            table='data/input/merged_biom_table.biom',
-            metadata=y_valid,
-            metadata_column='has_covid',
-            shuffle=False,
-            is_categorical=False,
-            shift=0,
-            rarefy_depth = 4000,
-            scale=1,
-            batch_size = 4,
-            asv_embeddings_fp = "asv_embeddings.npy"
-        )
-
-        def get_sample_type(file_path):
-            filename = os.path.basename(file_path)
-            # Remove the 'training_metadata_' prefix and the file extension
-            if filename.startswith('training_metadata_'):
-                sample_type = filename[len('training_metadata_'):]
-                sample_type = os.path.splitext(sample_type)[0]
-                return sample_type
-            return "Unknown"
-
-        model = Classifier()
-        asv_embedding_shape = tf.TensorShape([None, None, 768])
-        count_shape = tf.TensorShape([None, None, 1])
-        model.build([asv_embedding_shape, count_shape])
-
-        optimizer = tf.keras.optimizers.Adam(
-            learning_rate=tf.keras.optimizers.schedules.CosineDecay(
-            initial_learning_rate = 0.0,
-            warmup_target = 0.0003,
-            warmup_steps=0,
-            decay_steps=100_000
-        )
-)
-        model.compile(optimizer=optimizer, run_eagerly=False)
-        #switch loss to val loss 
-        #pass early stopping for callbacks
-        history = model.fit(embed_train, 
-                  validation_data = embed_valid, 
-                  validation_steps=embed_valid.steps_per_epoch, 
-                  epochs=10, 
-                  steps_per_epoch=embed_train.steps_per_epoch, 
-                  callbacks=[
-                          SaveModel("model_test.keras", report_back=1),
-                          EarlyStopping(patience=250, start_from_epoch=0, restore_best_weights=True)
-                   ])
-
-        validation_loss = history.history['val_loss']
-        epochs = np.array(range(len(validation_loss)))
-        plt.plot(epochs, validation_loss)
-        plt.title(f'Validation Loss Per Epoch {validation_loss[-1]}')
-        plt.savefig(f'trained_models/{get_sample_type(train_fp)}/{get_sample_type(train_fp)}_{i}_model_loss.png')
-        plt.close()
-        if history.history['val_loss'][-1] < curr_best_val_loss:
-            curr_best_model = model
-        model.save(f'trained_models/{get_sample_type(train_fp)}/{get_sample_type(train_fp)}_{i}_model.keras', save_format='keras')
-    curr_best_model.save(f'trained_models/{get_sample_type(train_fp)}/{get_sample_type(train_fp)}_best_model.keras', save_format='keras')
-    print(f"\nDNABERT-2: Best model saved for {get_sample_type(train_fp)} samples.")
-
-def run_dnabert_2():
-    train_model('data/input/training_metadata_forehead.tsv')
-    train_model('data/input/training_metadata_inside_floor.tsv')
-    train_model('data/input/training_metadata_stool.tsv')
-    train_model('data/input/training_metadata_nares.tsv')
-    print(f"\nDNABERT-2: Training complete.")
+        

@@ -11,6 +11,7 @@ import biom
 import os
 
 tf.keras.utils.set_random_seed(42)
+tf.keras.backend.clear_session()
 K = tf.keras
 
 def get_sample_type(file_path):

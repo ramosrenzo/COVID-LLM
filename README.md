@@ -40,9 +40,26 @@ pip uninstall triton
 ```
 
 ### Run Model
+Note: Ran on 64GB of CPU memory and on a NVIDIA 2080ti and on Linux Virtual Machine.
 
-Run the build script:
+The build script `run_embedding.py` stores embeddings from DNABERT-2 in the `data/input` folder:
 
 ```python
-python run.py
+python run_embedding.py
+```
+
+The build script`run.py` runs the training, testing, and plotting for AUROC and AUPRC.
+Specify which part of the pipeline to run with a target:
+
+`all` runs the training, test, and plotting for AUROC and AUPRC. If your system runs out of memory during the test, then run the `test` target on its own.
+
+`training` runs the training.
+
+`test` runs the test and plotting for AUROC and AUPRC.
+
+<br />
+<br />
+Run the build script with one target:
+```python
+python run.py <target>
 ```

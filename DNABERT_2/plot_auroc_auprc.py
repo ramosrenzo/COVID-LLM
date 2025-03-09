@@ -1,6 +1,7 @@
 import seaborn as sns
 from sklearn.metrics import roc_curve, auc, precision_recall_curve
 import matplotlib.pyplot as plt
+import numpy as np
 
 def plot_auroc_auprc(sample_data):    
     # set up
@@ -48,4 +49,4 @@ def plot_auroc_auprc(sample_data):
     plt.tight_layout()
     plt.subplots_adjust(wspace=0.3)
     
-    plt.savefig('trained_models/dnabert_2_adam_results_v1_ensemble).png')
+    plt.savefig('figures/auroc_auprc_dnabert_2.png')
