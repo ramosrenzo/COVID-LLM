@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoTokenizer, AutoModel, BertConfig, logging
+from transformers import AutoTokenizer, AutoModel, BertConfig
 import numpy as np
 from tqdm import tqdm
 from biom import load_table, Table

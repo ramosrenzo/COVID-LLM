@@ -3,11 +3,11 @@ import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import biom
 import os
+tf.keras.utils.set_random_seed(42)
 
 def get_sample_type(file_path):
     '''

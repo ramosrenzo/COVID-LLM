@@ -1,15 +1,14 @@
-from DNABERT.model import GeneratorDatasets
+from DNABERT.model import GeneratorDataset
 from DNABERT.model import Classifier
-from sklearn.model_selection import StratifiedKFold
 import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
-
 from keras.callbacks import EarlyStopping
-
+from sklearn.model_selection import StratifiedKFold
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import os
 import sys
 import warnings
@@ -26,12 +25,13 @@ def get_sample_type(file_path):
         return sample_type
     return "Unknown"
 
-def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, beta_1=None, beta_2=None, weight_decay=None, momentum=None, model_fp=None, large=True, use_cova=False):
+def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropout_rate, learning_rate, beta_1=None, beta_2=None, weight_decay=None, model_fp=None):
     training_metadata = pd.read_csv(train_fp, sep='\t', index_col=0)
     X = training_metadata.drop(columns=['study_sample_type', 'has_covid'], axis=1)
     y = training_metadata[['study_sample_type', 'has_covid']]
     sample_type = get_sample_type(train_fp)
-    dir_path = f'trained_models/{sample_type}_{opt_type}_{"large" if large else "small"}'
+
+    dir_path = f'trained_models_dnabert/{sample_type}'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
         
@@ -48,7 +48,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
         y_valid = y.iloc[valid_index]
 
         if sample_type == 'stool':
-            rarefy_depth = 1000
+            rarefy_depth = 4000
         else:
             rarefy_depth = 1000
     
@@ -61,8 +61,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             shift=0,
             rarefy_depth = rarefy_depth,
             scale=1,
-            epochs=100_000,
-            batch_size = 8,
+            batch_size = 4,
             gen_new_tables = True,
             sequence_embeddings = sequence_embedding_fp,
             sequence_labels = sequence_labels_fp,
@@ -79,8 +78,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             shift=0,
             rarefy_depth = rarefy_depth,
             scale=1,
-            epochs=100_000,
-            batch_size = 8,
+            batch_size = 4,
             sequence_embeddings = sequence_embedding_fp,
             sequence_labels = sequence_labels_fp,
             upsample=False,
@@ -89,15 +87,12 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
         )
 
         if model_fp is None:
-            model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate, use_cova=use_cova)
+            model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate)
         else:
             model = tf.keras.models.load_model(model_fp, compile=False)
-        token_shape = tf.TensorShape([None, sequence_embedding_dim])
-        batch_indicies = tf.TensorShape([None, 2])
-        indicies_shape = tf.TensorShape([None])
-        count_shape = tf.TensorShape([None, 1])
-        model.build([token_shape, batch_indicies, indicies_shape, count_shape])
-        model.summary()
+        asv_embedding_shape = tf.TensorShape([None, None, sequence_embedding_dim])
+        count_shape = tf.TensorShape([None, None, 1])
+        model.build([asv_embedding_shape, count_shape])
 
         if opt_type == 'adam':
             optimizer = tf.keras.optimizers.Adam(
@@ -105,31 +100,31 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
                 initial_learning_rate = 0.0,
                 warmup_target = learning_rate,
                 warmup_steps=0,
-                decay_steps=250_000,
+                decay_steps=100_000,
                 ),
                 use_ema = True,
                 beta_1 = beta_1,
                 beta_2 = beta_2,
                 weight_decay = weight_decay
             )
-            early_stop = EarlyStopping(patience=250, start_from_epoch=250, restore_best_weights=False)
+            early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=False)
         else:
             optimizer = tf.keras.optimizers.legacy.SGD(
                 learning_rate=tf.keras.optimizers.schedules.CosineDecay(
                 initial_learning_rate = 0.0,
                 warmup_target = learning_rate,
                 warmup_steps=0,
-                decay_steps=250_000,
+                decay_steps=100_000,
                 ),
                 momentum = momentum
             )
-            early_stop = EarlyStopping(patience=250, start_from_epoch=250, restore_best_weights=True)
+            early_stop = EarlyStopping(patience=100, start_from_epoch=50, restore_best_weights=True)
             
         model.compile(optimizer=optimizer, run_eagerly=False)
         history = model.fit(embed_train, 
                   validation_data = embed_valid, 
                   validation_steps=embed_valid.steps_per_epoch, 
-                  epochs=100_000,
+                  epochs=10_000,
                   steps_per_epoch=embed_train.steps_per_epoch, 
                   callbacks=[
                       early_stop
