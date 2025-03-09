@@ -6,6 +6,9 @@ import sys
 
 if __name__ == "__main__":
     try:
+        if len(sys.argv) != 3:
+            raise Exception("Incorrect number of targets.")
+
         model = sys.argv[1]
         target = sys.argv[2]
 
@@ -20,7 +23,7 @@ if __name__ == "__main__":
         if target in ['embedding', 'all']:
             if model == 'dnabert-2':
                 asv_embedding_dnabert_2()
-            if model == 'grover'
+            if model == 'grover':
                 asv_embedding_grover()
     except Exception as e:
         print(f"An error occurred during the process: {e}")

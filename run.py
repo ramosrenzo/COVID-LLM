@@ -14,6 +14,9 @@ import sys
 
 if __name__ == "__main__":
     try:
+        if len(sys.argv) != 3:
+            raise Exception("Incorrect number of targets.")
+
         model = sys.argv[1]
         target = sys.argv[2]
         

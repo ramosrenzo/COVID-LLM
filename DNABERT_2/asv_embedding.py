@@ -29,4 +29,5 @@ def asv_embedding():
     embeddings = np.array(embeddings).reshape((61974, 768))
     
     np.save("data/input/asv_embeddings_dnabert_2.npy", embeddings)
+    np.save("data/input/asv_embedding_ids.npy", table.ids(axis="observation"))
     print(f'DNABERT-2: ASV embeddings saved.')
