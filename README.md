@@ -34,7 +34,7 @@ pip install git+https://github.com/kwcantrell/attention-all-microbes.git@capston
 python -m pip install -r requirements.txt
 ```
 
-Please ensure that the `triton` package is not installed in your environment:
+Please ensure that the `triton` package is not installed in your environment, as it may cause errors when running DNABERT-2:
 
 ```python
 pip uninstall triton
@@ -59,7 +59,7 @@ The build script `run.py` handles training, testing, and plotting of AUROC and A
 
 - `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the `test` target separately.
 
-- `training` – Runs the training process. Trained models are stored in the `trained_models_dnabert_2` folder.
+- `training` – Runs the training process.
 
 - `test` – Runs testing and plots AUROC and AUPRC.
 
