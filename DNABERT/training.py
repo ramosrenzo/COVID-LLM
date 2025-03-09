@@ -87,10 +87,7 @@ def train_model(train_fp, large, opt_type, hidden_dim, num_hidden_layers, dropou
             rarefy_seed = 42
         )
 
-        if model_fp is None:
-            model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate)
-        else:
-            model = tf.keras.models.load_model(model_fp, compile=False)
+        model = Classifier(hidden_dim=hidden_dim, num_hidden_layers=num_hidden_layers, dropout_rate=dropout_rate)
         asv_embedding_shape = tf.TensorShape([None, None, sequence_embedding_dim])
         count_shape = tf.TensorShape([None, None, 1])
         model.build([asv_embedding_shape, count_shape])
