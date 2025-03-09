@@ -6,14 +6,10 @@ if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
 
-from aam.models.sequence_regressor import SequenceRegressor
-from aam.models.sequence_regressor_v2 import SequenceRegressorV2
-from aam.callbacks import SaveModel
 from keras.callbacks import EarlyStopping
 
 import pandas as pd
 import numpy as np
-from biom import Table, load_table
 import os
 import sys
 import warnings
@@ -40,6 +36,7 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
         os.makedirs(dir_path)
         
     sequence_embedding_fp = 'data/input/asv_embeddings.npy'
+    sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
     sequence_embedding_dim = 768
     
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -65,10 +62,10 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             rarefy_depth = rarefy_depth,
             scale=1,
             epochs=100_000,
-            batch_size = 4,
+            batch_size = 8,
             gen_new_tables = True,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = 'data/input/asv_embeddings_ids.npy',
+            sequence_labels = sequence_labels_fp,
             upsample=False,
             drop_remainder=False
         )
@@ -83,9 +80,9 @@ def train_model(train_fp, opt_type, hidden_dim, num_hidden_layers, dropout_rate,
             rarefy_depth = rarefy_depth,
             scale=1,
             epochs=100_000,
-            batch_size = 4,
+            batch_size = 8,
             sequence_embeddings = sequence_embedding_fp,
-            sequence_labels = 'data/input/asv_embeddings_ids.npy',
+            sequence_labels = sequence_labels_fp,
             upsample=False,
             drop_remainder=False,
             rarefy_seed = 42

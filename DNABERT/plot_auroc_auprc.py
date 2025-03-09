@@ -48,4 +48,4 @@ def plot_auroc_auprc(sample_data):
     plt.tight_layout()
     plt.subplots_adjust(wspace=0.3)
     
-    plt.savefig('trained_models/dnabert_adam_results_v1_ensemble).png')
+    plt.savefig('trained_models/auroc_auprc_dnabert.png')

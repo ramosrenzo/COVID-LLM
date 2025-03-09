@@ -1,9 +1,8 @@
+from DNABERT.model import GeneratorDataset
 import tensorflow as tf
 if tf.config.list_physical_devices("GPU"):
     gpus = tf.config.list_physical_devices("GPU")
     tf.config.experimental.set_memory_growth(gpus[0], True)
-from DNABERT.model import GeneratorDataset
-
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -33,7 +32,7 @@ def test_model(test_fp, model_fp, ensemble=False):
         rarefy_depth = 1000
 
     sequence_embedding_fp = 'data/input/asv_embeddings.npy'
-    sequence_embedding_dim = 768
+    sequence_labels_fp = 'data/input/asv_embeddings_ids.npy'
 
     embed_test = [GeneratorDataset(
         table='data/input/merged_biom_table.biom',
@@ -46,9 +45,9 @@ def test_model(test_fp, model_fp, ensemble=False):
         scale=1,
         batch_size = 32,
         epochs=1,
-        gen_new_tables = False, #only in training dataset
+        gen_new_tables = False,
         sequence_embeddings = sequence_embedding_fp,
-        sequence_labels = 'data/input/asv_embeddings_ids.npy',
+        sequence_labels = sequence_labels_fp,
         upsample=False,
         drop_remainder=False,
         gen_new_table_frequency = 1,
