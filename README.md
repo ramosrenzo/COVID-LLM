@@ -101,54 +101,19 @@ Run the build script with two targets:
 python run.py <target-1> <target-2>
 ```
 
-## Citation
+## References
 **AAM**
 
-Cantrell, Kalen. _Attention All Microbes (AAM)_. (2023). attention-all-microbes. Knight Lab. https://github.com/kwcantrell/attention-all-microbes
+Cantrell, Kalen. _Attention All Microbes (AAM)_. attention-all-microbes. Knight Lab. (2023). https://github.com/kwcantrell/attention-all-microbes
 
 **DNABERT**
 
-```
-@article{ji2021dnabert,
-    author = {Ji, Yanrong and Zhou, Zhihan and Liu, Han and Davuluri, Ramana V},
-    title = "{DNABERT: pre-trained Bidirectional Encoder Representations from Transformers model for DNA-language in genome}",
-    journal = {Bioinformatics},
-    volume = {37},
-    number = {15},
-    pages = {2112-2120},
-    year = {2021},
-    month = {02},
-    issn = {1367-4803},
-    doi = {10.1093/bioinformatics/btab083},
-    url = {https://doi.org/10.1093/bioinformatics/btab083},
-    eprint = {https://academic.oup.com/bioinformatics/article-pdf/37/15/2112/50578892/btab083.pdf},
-}
-```
+Ji, Yanrong, et al. "DNABERT: pre-trained Bidirectional Encoder Representations from Transformers model for DNA-language in genome." Bioinformatics 37.15 (2021): 2112-2120.
 
 **DNABERT-2**
 
-```
-@misc{zhou2023dnabert2,
-      title={DNABERT-2: Efficient Foundation Model and Benchmark For Multi-Species Genome}, 
-      author={Zhihan Zhou and Yanrong Ji and Weijian Li and Pratik Dutta and Ramana Davuluri and Han Liu},
-      year={2023},
-      eprint={2306.15006},
-      archivePrefix={arXiv},
-      primaryClass={q-bio.GN}
-}
-```
+Zhou, Zhihan, et al. "Dnabert-2: Efficient foundation model and benchmark for multi-species genome." arXiv preprint arXiv:2306.15006 (2023).
 
 **GROVER**
 
-```
-@article{sanabria2024dna,
-  title={DNA language model GROVER learns sequence context in the human genome},
-  author={Sanabria, Melissa and Hirsch, Jonas and Joubert, Pierre M and Poetsch, Anna R},
-  journal={Nature Machine Intelligence},
-  volume={6},
-  number={8},
-  pages={911--923},
-  year={2024},
-  publisher={Nature Publishing Group UK London}
-}
-```
+Sanabria, Melissa, et al. "DNA language model GROVER learns sequence context in the human genome." Nature Machine Intelligence 6.8 (2024): 911-923.
