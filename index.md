@@ -287,16 +287,16 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Appendices</b></h2>
 <h3><b>Additional Figures</b></h3>
-<iframe src="assets/aam_empress_tree.svg" width="740" height="auto"></iframe>
+<iframe src="assets/aam_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
 
-<iframe src="assets/dnabert_empress_tree.svg" width="740" height="auto"></iframe>
+<iframe src="assets/dnabert_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 2: Empress Tree of DNABERT stool data</p>
 
-<iframe src="assets/dnabert_2_empress_tree.svg" width="740" height="auto"></iframe>
-<p id="figure">Figure A 3: Empress Tree of DNABERT-2 stool data</p>
+<iframe src="assets/dnabert_2_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
+<p id="figure" >Figure A 3: Empress Tree of DNABERT-2 stool data</p>
 
-<iframe src="assets/grover_empress_tree.svg" width="740" height="auto"></iframe>
+<iframe src="assets/grover_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 4: Empress Tree of GROVER stool data</p>
 
 <style>
