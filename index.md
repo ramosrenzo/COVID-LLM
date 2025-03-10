@@ -161,7 +161,7 @@ state)</p>
 
 <img src="assets/data_processing_classification_pipeline.jpg" alt="Data Processing and Classification Pipeline" width="740" height="auto">
 <p id="figure">Figure 7: Samples are categorized into four environment types, with each subset split 80:20 into training and test sets. Each environment type is processed separately through the LLMs to acquire embeddings. The embeddings are passed individually through a classifier to be labeled as “Positive” or “Not detected”.</p>
-<br/><br/>
+<br/>
 <h3>Model Pipeline</h3>
 <p>
   We evaluated four models—AAM, DNABERT, DNABERT-2 and GROVER—by performing machine learning analysis on 16S rRNA gene amplicon sequencing data from multiple sample types (forehead, inside floor, nares and stool) to predict SARS-CoV-2 status (positive or not detected) based on RT-qPCR results.
@@ -235,16 +235,16 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Appendices</b></h2>
 <h3><b>Additional Figures</b></h3>
-<iframe src="assets/aam_empress_tree.svg" width="740" height="360" frameBorder=0></iframe>
+<iframe src="assets/aam_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
 
-<iframe src="assets/dnabert_empress_tree.svg" width="740" height="360" frameBorder=0></iframe>
+<iframe src="assets/dnabert_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 2: Empress Tree of DNABERT stool data</p>
 
-<iframe src="assets/dnabert_2_empress_tree.svg" width="740" height="360" frameBorder=0></iframe>
+<iframe src="assets/dnabert_2_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure" >Figure A 3: Empress Tree of DNABERT-2 stool data</p>
 
-<iframe src="assets/grover_empress_tree.svg" width="740" height="360" frameBorder=0></iframe>
+<iframe src="assets/grover_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
 <p id="figure">Figure A 4: Empress Tree of GROVER stool data</p>
 
 <style>
