@@ -129,7 +129,7 @@ state)</p>
     We leveraged the pre-trained DNABERT-2 model available on HuggingFace. ASVs were individually inputted in the model and we extracted the hidden states as output. Then, the hidden states were mean-pooled to acquire final model embeddings at the sequence-level.
 
 
-</p>
+</p><br>
 
 <h3>GROVER</h3>
 <p>
@@ -235,16 +235,16 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Appendices</b></h2>
 <h3><b>Additional Figures</b></h3>
-<iframe src="assets/aam_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
+<iframe src="assets/aam_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
 
-<iframe src="assets/dnabert_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
+<iframe src="assets/dnabert_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 2: Empress Tree of DNABERT stool data</p>
 
-<iframe src="assets/dnabert_2_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
+<iframe src="assets/dnabert_2_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure" >Figure A 3: Empress Tree of DNABERT-2 stool data</p>
 
-<iframe src="assets/grover_empress_tree.svg" width="740" height="auto" frameBorder=0></iframe>
+<iframe src="assets/grover_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 4: Empress Tree of GROVER stool data</p>
 
 <style>
