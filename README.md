@@ -78,7 +78,7 @@ python run_data.py <target-1> <target-2>
 ```
 
 ### Run Classifier
-The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification ("Positve" or "Not detected"). Trained classifiers for each LLM are stored in their respective `trained_models_<LLM>` folder. Plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
+The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification ("Positive" or "Not detected"). Trained classifiers for each LLM are stored in their respective `trained_models_<LLM>` folder. Plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
 - `aam` - Uses AAM embeddings.
 
 - `dnabert` - Uses DNABERT embeddings.
