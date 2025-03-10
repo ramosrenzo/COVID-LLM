@@ -234,7 +234,7 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 <br>
 
 <h2><b>Appendices</b></h2>
-<h3><b>Additional Figures</b></h3>
+<h3>Additional Figures</h3>
 <iframe src="assets/aam_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
 
