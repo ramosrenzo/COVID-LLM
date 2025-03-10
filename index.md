@@ -331,9 +331,15 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
     .empress{
       max-width: 100%;
-      max-height: 100%;
+      height: 360px;
       width: 100%;     
       height: 100%;
       object-fit: contain;
+    }
+
+    @media screen and (max-width: 1330px) {
+        .empress{
+        height: 100%;
+      }
     }
 </style>
