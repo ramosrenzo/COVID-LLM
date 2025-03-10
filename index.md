@@ -39,12 +39,12 @@
 
 <img src="assets/covid.jpg" alt="SARS-CoV-2" width="740" height="auto">
 <p> Reference: Centers for Disease Control and Prevention (CDC) </p>
-
+<br>
 <h2><b>Abstract</b></h2>
 <p>
     In this study, we evaluated the performance of four Large Language Models (LLMs)—AAM, DNABERT, DNABERT-2, GROVER—in predicting COVID-19 status from microbiome data. Given the increasing recognition of the microbiome’s role in health outcomes, we focused on how the pre-training of these models impact their predictive capabilities. These four models were chosen for their distinct pre-training strategies: DNABERT and GROVER were trained on the human genome, DNABERT-2 incorporated multi-species genomes and AAM was trained on 16S ribosomal RNA (rRNA) sequencing data. We assessed each model’s performance by using embeddings extracted from various hospital-derived 16S rRNA sequencing data labeled with COVID-19 status ("Positive" or "Not detected") and fed the embeddings through a classifier. For our evaluation metrics, we used AUROC and AUPRC to benchmark. Our results show that AAM, the model pre-trained on 16S rRNA sequencing data, outperformed the other models, achieving the highest AUROC and AUPRC scores overall across the four various hospital-derived sample types. DNABERT-2, also demonstrated strong performance, while DNABERT and GROVER fell short. These findings highlight the significance of pre-training models on domain-specific data, such as 16S rRNA sequences, in order to improve predictability for microbiome-based health outcomes like COVID-19 status. Additionally, the success of DNABERT-2 emphasizes the value of multi-species pre-training for capturing more complex microbial relationships.
 </p>
-
+<br>
 <h2><b>Introduction</b></h2>
 <p>
    With the vast amount of data available today, there are plenty of opportunities to harness it for global progress, from generating personalized recommendations to improving communication across languages. This is made possible with the power of Large Language Models (LLMs). A Large Language Model is a type of machine learning model that is trained on large sets of data to learn patterns and relationships among forms of written content via deep neural networks <a href="#Toloka">(Toloka AI 2199)</a>. Originally developed for Natural Language Processing (NLP), LLMs have since expanded into a wide range of sectors, including healthcare.
@@ -61,7 +61,7 @@
   <br/><br/>
   Beyond these models, our study also incorporated DNABERT-2 and AAM into our comparative framework. DNABERT-2 is a successor of DNABERT as it refines the original architecture and training process of DNABERT, leading to an improved contextual understanding of k-mers. Its superior tokenization and representation capabilities make it a promising candidate for detecting subtle genetic markers associated with COVID-19. By leveraging DNABERT-2’s improved performance, we were able to capture more nuanced genomic features that correlate with disease status. Unlike DNABERT-based models that generate embeddings at the sequence level, Attention All Microbes is specifically designed to derive sample-level embeddings from microbiome data. It employs advanced attention mechanisms to aggregate and denoise data from entire microbial communities. This approach captures global microbial interactions and community structures, which has the potential of revealing characteristic features that are indicative of COVID-19 status. AAM's focus on sample-level data offers a complementary perspective to the sequence-based embeddings used in DNABERT and DNABERT-2.
 </p>
-
+<br>
 <h2><b>Literature Review</b></h2>
 <p>
   Over the course of the pandemic, the world experienced millions of cases and deaths, prompting the development of vaccines and treatments aimed at improving the conditions of COVID-19. In response to the evolving crisis, accurate results of COVID-19 cases had become essential for healthcare systems to effectively prevent and control the disease <a href="#Patil2023">(Patil, Mollaei and Barati Farimani 2023)</a>. With the help of machine learning, computational biology has been able to make advancements and reveal the potential of utilizing microbiome data to predict health outcomes <a href="#Bao2024">(Bao et al. 2024)</a>, including infectious diseases such as COVID-19. The microbiome—the community of microorganisms residing in the human body—has been present in a range of diseases, with growing evidence suggesting its role in influencing immune responses and disease severity <a href="#Yeoh2021">(Yeoh et al. 2021)</a>. A significant area of research has been the use of machine learning techniques to analyze microbiome data in the context of predicting their COVID-19 status—whether a person has been detected positive for the virus, or the virus has not been detected.
@@ -75,7 +75,7 @@
         <li>Attention All Microbes uses attention-based mechanisms to generate sample-level embeddings by aggregating microbiome data, reducing noise and capturing global microbial interactions. This approach focuses on entire microbial communities, which can provide more accurate predictive features for COVID-19 status.</li>
     </ul>
 </p>
-
+<br>
 <h2><b>Data Description</b></h2>
 <p>
     We utilized sequencing data and BIOM tables <a href="#mcdonald2012biom">(Mcdonald et al. 2012)</a> from the Qiita database (Study ID: 13092) <a href="#gonzalez2018qiita">(Gonzalez et al. 2018)</a>. The dataset comprises 972 samples collected from hospitalized ICU patients with COVID-19, healthcare providers and hospital surfaces before, during and after admission. SARS-CoV-2 presence was determined using RT-qPCR and microbial communities were identified by 16S rRNA gene amplicon sequencing. We used amplicon sequence variants (ASVs) of 150 base pairs.
@@ -84,7 +84,7 @@
 </p>
 <img src="assets/covid19_status_across_environments.jpg" alt="COVID-19 Status Across Environments" width="740" height="auto">
 <p id="figure">Figure 1: The counts of COVID-19 status across sample environments.</p>
-
+<br>
 <h2><b>Methods</b></h2>
 
 <h3>Attention All Microbes (AAM)</h3>
@@ -171,7 +171,7 @@ state)</p>
   ASV embeddings and IDs were extracted for each model to construct the training, validation and test datasets. Each dataset was split 80/20 for training and testing, with the training set further divided into an 80/20 split for training and validation during each fold iteration.
   <br/><br/>
   Model performance was assessed using area under the receiver operating characteristic curve (AUROC) and area under the precision-recall curve (AUPRC), computed with the sklearn package. To ensure reproducibility, we generated 69 different test datasets, as this was the maximum number of iterations feasible given the computational constraints of our NVIDIA 2080 Ti GPU. Each dataset was seeded to maintain consistency.
-</p>
+</p><br>
 
 <h2><b>Results</b></h2>
 <img src="assets/random_forest_results.jpg" alt="Random Forest Results" width="740" height="auto">
@@ -193,7 +193,7 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 <img src="assets/grover_results.jpg" alt="GROVER Results" width="740" height="auto">
 <p id="figure">Figure 12: The prediction performance of GROVER classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC.</p>
-
+<br>
 <h2><b>Discussion</b></h2>
 <p>
   Our results indicated that among the four tested models, AAM consistently outperformed the others in microbiome-based classification tasks. This performance may have been due to AAM’s pre-training strategy on 16S microbiome data, which aligned with the dataset we used in this study. In contrast, DNABERT, DNABERT-2 and GROVER, which were pre-trained on broader genomic sequences, showed lower performance likely due to the lack of direct pre-training on 16S sequences. However, when comparing only the three models, DNABERT-2 outperformed the others by a significant margin. This suggests that pre-training on diverse, multi-species genome data may have positively impacted a model's effectiveness in classification tasks.
@@ -204,7 +204,7 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
   <br/><br/>
   The implications of using LLMs for microbiome classification are notable. Our findings suggested that LLM-based approaches, particularly when pre-trained on relevant microbiome data, could outperform traditional machine learning methods like Random Forest. However, challenges or limitations such as dataset bias, class imbalance and overall generalizability needed to be addressed to maximize the potential of these transformer-based models. As LLMs continue to develop and advance, they offer promising potential to enhance COVID-19  and possibly other disease detection using microbiome data.
 </p>
-
+<br>
 <h2><b>References</b></h2>
 <ul>
   <li id="anibal2024omicron">Anibal, J. T., et al. (2024). Omicron detection with large language models and YouTube audio data. <i>MedRxiv.</i></li>
@@ -231,7 +231,7 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
   <li id="zhou2023dnabert">Zhou, Z., et al. (2023). Dnabert-2: Efficient foundation model. <i>ArXiv Preprint.</i></li>
   <li id="zvyagin2023genslms">Zvyagin, M., et al. (2023). GenSLMs: Genome-scale language models. <i>Int. J. High Perf. Comp. Apps, 37(6),</i> 683–705.</li>
 </ul>
-
+<br>
 
 <h2><b>Appendices</b></h2>
 <h3><b>Additional Figures</b></h3>
