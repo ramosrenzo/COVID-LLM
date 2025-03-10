@@ -13,6 +13,11 @@ hospital-derived 16S data labeled with COVID-19 status ("Positive" or "Not detec
 ## Clone the Repository
 The LLMs was run on a Linux Virtual Machine with 64GB of CPU memory and a NVIDIA 2080 Ti GPU. We used <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git Large File Storage (LFS)</a> to upload our embeddings from DNABERT, DNABERT-2, and GROVER, along with our trained Keras classifiers. Please ensure Git LFS is installed. Alternatively, you can preprocess the data and generate embeddings locally using the `run_data.py` script.
 
+If Git LFS is downloaded, install the package:
+```python
+git lfs install
+```
+
 Clone the repository:
 ```python
 git clone https://github.com/ramosrenzo/COVID-LLM.git
