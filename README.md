@@ -93,7 +93,7 @@ Use a second target argument to specify which stage of the pipeline to execute:
 
 - `train` – Runs the training process.
 
-- `test` – Runs testing and plots AUROC and AUPRC scores.
+- `test` – Runs the testing process and plots AUROC and AUPRC scores. If Git LFS is not installed, then training must be done locally before testing. 
 
 Run the build script with two targets:
 
