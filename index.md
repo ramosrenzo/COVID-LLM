@@ -30,11 +30,11 @@
     });
 </script>
 
-<h1><b>Assessing LLMs to Improve the Prediction of COVID-19 Status</b><h1>
+<h1><b>Assessing LLMs to Improve the Prediction of COVID-19 Status Using Microbiome Data</b><h1>
 <p id="authors">
-    Team: Sean Chan, Carmen Truong, Kathleen Nguyen, and Lorenzo Ramos
+    Team: Sean Chan, Kathleen Nguyen, Carmen Truong and Lorenzo Ramos
     <br/>
-    Mentor: Rob Knight
+    Mentor: Rob Knight, Kalen Cantrell and Daniel McDonald
 </p>
 
 <img src="assets/covid.jpg" alt="SARS-CoV-2" width="740" height="auto">
@@ -162,7 +162,7 @@ state)</p>
 <img src="assets/data_processing_classification_pipeline.jpg" alt="Data Processing and Classification Pipeline" width="740" height="auto">
 <p id="figure">Figure 7: Samples are categorized into four environment types, with each subset split 80:20 into training and test sets. Each environment type is processed separately through the LLMs to acquire embeddings. The embeddings are passed individually through a classifier to be labeled as “Positive” or “Not detected”.</p>
 <br/><br/>
-<h3><b>Model Pipeline</b></h3>
+<h3>Model Pipeline</h3>
 <p>
   We evaluated four models—AAM, DNABERT, DNABERT-2 and GROVER—by performing machine learning analysis on 16S rRNA gene amplicon sequencing data from multiple sample types (forehead, inside floor, nares and stool) to predict SARS-CoV-2 status (positive or not detected) based on RT-qPCR results.
   <br/><br/>
@@ -175,23 +175,23 @@ state)</p>
 
 <h2><b>Results</b></h2>
 <img src="assets/random_forest_results.jpg" alt="Random Forest Results" width="740" height="auto">
-<p id="figure">The prediction performance of Random Forest classifiers on SARS-CoV-2 status
+<p id="figure">Figure 8: The prediction performance of Random Forest classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC <a href="#Marotz2020">(Marotz et al. 2020)</a>.</p>
 
 <img src="assets/aam_results.jpg" alt="AAM Results" width="740" height="auto">
-<p id="figure">The prediction performance of AAM classifiers on SARS-CoV-2 status
+<p id="figure">Figure 9: The prediction performance of AAM classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <img src="assets/dnabert_results.jpg" alt="DNABERT Results" width="740" height="auto">
-<p id="figure">The prediction performance of DNABERT classifiers on SARS-CoV-2 status
+<p id="figure">Figure 10: The prediction performance of DNABERT classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <img src="assets/dnabert_2_results.jpg" alt="DNABERT-2 Results" width="740" height="auto">
-<p id="figure">The prediction performance of DNABERT-2 classifiers on SARS-CoV-2 status
+<p id="figure">Figure 11: The prediction performance of DNABERT-2 classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <img src="assets/grover_results.jpg" alt="GROVER Results" width="740" height="auto">
-<p id="figure">The prediction performance of GROVER classifiers on SARS-CoV-2 status
+<p id="figure">Figure 12: The prediction performance of GROVER classifiers on SARS-CoV-2 status
 was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Discussion</b></h2>
@@ -204,8 +204,6 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
   <br/><br/>
   The implications of using LLMs for microbiome classification are notable. Our findings suggested that LLM-based approaches, particularly when pre-trained on relevant microbiome data, could outperform traditional machine learning methods like Random Forest. However, challenges or limitations such as dataset bias, class imbalance and overall generalizability needed to be addressed to maximize the potential of these transformer-based models. As LLMs continue to develop and advance, they offer promising potential to enhance COVID-19  and possibly other disease detection using microbiome data.
 </p>
-
-<h2><b>Conclusion</b></h2>
 
 <h2><b>References</b></h2>
 <ul>
