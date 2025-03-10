@@ -60,7 +60,7 @@ python -m ipykernel install --user --name=covid_llms
 ```
 
 ### Run Data Preprocessing and Get Embeddings
-The build script `run_data.py` handles data preprocessing and generates embeddings from the LLMs. Preprocessed data and model embeddings are stored in the `data/input` folder. If Git LFS is not installed, then this script is necessary to run for DNABERT, DNABERT-2, and GROVER before moving on to the classifer stage. The embeddings for AAM was uploaded normally so this section is not necessary. Use a target argument to specify which LLM to run:
+The build script `run_data.py` handles data preprocessing and generates embeddings from the LLMs. Preprocessed data and model embeddings are stored in the `data/input` folder. If Git LFS is not installed, then this script is necessary to run for DNABERT, DNABERT-2, and GROVER before moving on to the classifer stage. The embeddings for AAM was uploaded in the standard way so this section is not necessary. Use a target argument to specify which LLM to run:
 
 - `dnabert` - Runs DNABERT.
 
@@ -109,7 +109,7 @@ python run.py <target-1> <target-2>
 ## References
 **AAM**
 
-Cantrell, Kalen. _Attention All Microbes (AAM)_. attention-all-microbes. Knight Lab. (2023). https://github.com/kwcantrell/attention-all-microbes
+Cantrell, Kalen. "Attention All Microbes (AAM)." (2025). https://github.com/kwcantrell/attention-all-microbes
 
 **DNABERT**
 
