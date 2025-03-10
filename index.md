@@ -235,16 +235,16 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Appendices</b></h2>
 <h3>Additional Figures</h3>
-<iframe src="assets/aam_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
+<iframe class="empress" src="assets/aam_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
 
-<iframe src="assets/dnabert_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
+<iframe class="empress" src="assets/dnabert_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 2: Empress Tree of DNABERT stool data</p>
 
-<iframe src="assets/dnabert_2_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
+<iframe class="empress" src="assets/dnabert_2_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure" >Figure A 3: Empress Tree of DNABERT-2 stool data</p>
 
-<iframe src="assets/grover_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
+<iframe class="empress" src="assets/grover_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
 <p id="figure">Figure A 4: Empress Tree of GROVER stool data</p>
 
 <style>
@@ -329,4 +329,11 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
       transform: scale(1.5);
     }
 
+    .empress{
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;     
+      height: 100%;
+      object-fit: contain;
+    }
 </style>
