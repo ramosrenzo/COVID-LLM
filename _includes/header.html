@@ -70,12 +70,12 @@
   .toc-level-2 { padding-left: 15px; } /* h3 */
 
   .site-header {
+      position: sticky;
       width: 100%;
       max-width: 100%;
-      position: sticky;
       top: 0;
       background: white;
-      z-index: 11;
+      z-index: 100;
       overflow: hidden;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -131,6 +131,9 @@
       visibility: hidden;
   }
 
+  .sidebar-active {
+      overflow: hidden;
+  }
 
   @media (max-width: 1330px) {
   .mobile-feat {
