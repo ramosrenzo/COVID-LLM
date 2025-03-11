@@ -1,5 +1,5 @@
 # Assessing LLMs to Improve the Prediction of COVID-19 Status Using Microbiome Data
-Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
+Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status Using Microbiome Data</a>
 
 We evaluated the performance of four large language models (LLMs)—DNABERT, DNABERT-2, GROVER and AAM—in predicting COVID-19 status
 from microbiome data. These four models were chosen for their
