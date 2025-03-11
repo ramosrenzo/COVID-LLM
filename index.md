@@ -395,7 +395,7 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
     }
 
     .ref{
-      scroll-margin-top: 80px;
+      scroll-margin-top: 62px;
     }
 
 </style>
