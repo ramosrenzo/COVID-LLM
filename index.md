@@ -37,8 +37,8 @@
     Mentor: Rob Knight, Kalen Cantrell and Daniel McDonald
 </p>
 
-<img src="assets/covid.jpg" alt="SARS-CoV-2" width="740" height="auto">
-<p> Reference: Centers for Disease Control and Prevention (CDC) </p>
+<img src="assets/covid_19.jpg" alt="SARS-CoV-2" width="740" height="auto">
+<p id="source"> Source: Centers for Disease Control and Prevention (CDC) </p>
 <br>
 <h2><b>Abstract</b></h2>
 <p>
@@ -235,28 +235,35 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
 <h2><b>Appendices</b></h2>
 <h3>Additional Figures</h3>
-<iframe class="empress" src="assets/aam_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
-<p id="figure">Figure A 1: Empress Tree of AAM stool data</p>
+<iframe class="empire" src="assets/aam_empire_plot.svg" width="auto" height="360" frameBorder=0></iframe>
+<p id="figure">Figure A 1: Empire plot of AAM stool data</p>
 
-<iframe class="empress" src="assets/dnabert_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
-<p id="figure">Figure A 2: Empress Tree of DNABERT stool data</p>
+<iframe class="empire" src="assets/dnabert_empire_plot.svg" width="auto" height="360" frameBorder=0></iframe>
+<p id="figure">Figure A 2: Empire plot of DNABERT stool data</p>
 
-<iframe class="empress" src="assets/dnabert_2_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
-<p id="figure" >Figure A 3: Empress Tree of DNABERT-2 stool data</p>
+<iframe class="empire" src="assets/dnabert_2_empire_plot.svg" width="auto" height="360" frameBorder=0></iframe>
+<p id="figure" >Figure A 3: Empire plot of DNABERT-2 stool data</p>
 
-<iframe class="empress" src="assets/grover_empress_tree.svg" width="auto" height="360" frameBorder=0></iframe>
-<p id="figure">Figure A 4: Empress Tree of GROVER stool data</p>
+<iframe class="empire" src="assets/grover_empire_plot.svg" width="auto" height="360" frameBorder=0></iframe>
+<p id="figure">Figure A 4: Empire plot of GROVER stool data</p>
 
 <style>
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+        height: 100%;
+    }
+
     #toc {
         position: fixed;
         top: 100px;
         right: 20px;
-        width: 250px;
+        width: 230px;
         padding: 10px;
         border-radius: 5px;
         max-height: 80vh;
         overflow-y: auto;
+        z-index: 10;
     }
 
     #toc h3 {
@@ -303,13 +310,54 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
         color: gray
     }
 
+    #source{
+        color: gray
+    }
+
+
     #figure{
         text-align: center;
     }
     
     @media screen and (max-width: 1330px) {
         #toc {
-            display: none;
+            visibility: hidden;
+            right: -300px;
+            width: 220px;
+        }
+
+        .sidebar-active #toc {
+            visibility: visible; 
+            right: 0px;
+            transition: right 0.3s ease-in-out;
+            max-width: 100%
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        #toc {
+            visibility: hidden;
+            right: -200px;
+            width: 150px;
+        }
+
+        .sidebar-active #toc {
+            visibility: visible; 
+            right: 0px;
+            transition: right 0.3s ease-in-out;
+            max-width: 100%
+        }
+
+        #sidebar {
+            top: 0;
+            right: -200px;
+            width: 150px;
+        }
+    }
+
+    @media screen and (min-width: 1331px) {
+        #toc {
+            display: block !important;
         }
     }
 
@@ -329,18 +377,21 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
       transform: scale(1.5);
     }
 
-    .empress{
+    .empire{
       width: 740px;     
       height: 360px;
     }
 
     @media screen and (max-width: 1330px) {
-        .empress{
+        .empire{
           max-width: 100%;
-          max-height: 100%;
           width: 100%; 
-          height: 100%;
           object-fit: contain;
         }
     }
+
+    h2, h3, h4, h5, h6 {
+        scroll-margin-top: 80px;
+    }
+
 </style>
