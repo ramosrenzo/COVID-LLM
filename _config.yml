@@ -2,9 +2,5 @@ theme: minima
 kramdown:
   toc_levels: 2..6
 github: false
-title: |
-  Team:  
-  Sean Chan  
-  Kathleen Nguyen  
-  Carmen Truong  
-  Lorenzo Ramos
+title: ""
+description: ""
