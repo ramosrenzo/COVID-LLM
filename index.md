@@ -207,29 +207,29 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 <br>
 <h2><b>References</b></h2>
 <ul>
-  <li id="anibal2024omicron">Anibal, J. T., et al. (2024). Omicron detection with large language models and YouTube audio data. <i>MedRxiv.</i></li>
-  <li id="banerjee2023llm">Banerjee, S., et al. (2023). Large language modeling and classical AI methods for the future of healthcare. <i>Journal of Medicine, Surgery, and Public Health, 1,</i> 100026. <a href="https://doi.org/10.1016/j.glmedi.2023.100026">https://doi.org/10.1016/j.glmedi.2023.100026</a></li>
-  <li id="banik2024chatgpt">Banik, D., et al. (2024). Systematic exploration and in-depth analysis of ChatGPT architectures progression. <i>Artificial Intelligence Review, 57.</i> <a href="https://doi.org/10.1007/s10462-024-10832-0">https://doi.org/10.1007/s10462-024-10832-0</a></li>
-  <li id="Bao2024">Bao, Z., et al. (2024). Predicting host health status through an integrated machine learning framework. <i>Scientific Reports, 14,</i> 31143. <a href="https://doi.org/10.1038/s41598-024-82418-3">https://doi.org/10.1038/s41598-024-82418-3</a></li>
-  <li id="cantrell2025microbes">Cantrell, K. W. (2025). Attention All Microbes. <a href="https://github.com/kwcantrell/attention-all-microbes/tree/capstone-2025">GitHub Repository</a></li>
-  <li id="CentersforDiseaseControlandPrevention_2024">Centers for Disease Control and Prevention. (2024, July). COVID-19 Timeline. <a href="https://www.cdc.gov/museum/timeline/covid19.html#">https://www.cdc.gov/museum/timeline/covid19.html#</a></li>
-  <li id="devlin2018bert">Devlin, J., et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. <i>CoRR, abs/1810.04805.</i> <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a></li>
-  <li id="Farhat2023">Farhat, F., et al. (2023). COVID-19 and beyond: leveraging AI for enhanced outbreak control. <i>Frontiers in Artificial Intelligence, 6,</i> 1266560. <a href="https://doi.org/10.3389/frai.2023.1266560">https://doi.org/10.3389/frai.2023.1266560</a></li>
-  <li id="feng2025carbon">Feng, Z., et al. (2025). Implementing a universal carbon emissions prediction model. <i>Applied Energy, 383,</i> 125372. <a href="https://doi.org/10.1016/j.apenergy.2025.125372">https://doi.org/10.1016/j.apenergy.2025.125372</a></li>
-  <li id="gonzalez2018qiita">Gonzalez, A., et al. (2018). Qiita: rapid, web-enabled microbiome meta-analysis. <i>Nature Methods, 15(10),</i> 796–798.</li>
-  <li id="HernandezMedina2022">Hernández Medina, R., et al. (2022). Machine learning in microbiome research. <i>ISME Communications, 2,</i> 98. <a href="https://doi.org/10.1038/s43705-022-00182-9">https://doi.org/10.1038/s43705-022-00182-9</a></li>
-  <li id="ji2021dnabert">Ji, Y., et al. (2021). DNABERT: pre-trained BERT for DNA-language in genome. <i>Bioinformatics, 37(15),</i> 2112–2120. <a href="https://doi.org/10.1093/bioinformatics/btab083">https://doi.org/10.1093/bioinformatics/btab083</a></li>
-  <li id="liu2023chatgpt">Liu, Y., et al. (2023). Summary of ChatGPT-Related research. <i>Meta-Radiology, 1(2),</i> 100017. <a href="https://doi.org/10.1016/j.metrad.2023.100017">https://doi.org/10.1016/j.metrad.2023.100017</a></li>
-  <li id="Markov2023">Markov, P. V., et al. (2023). The evolution of SARS-CoV-2. <i>Nature Reviews Microbiology, 21,</i> 361–379. <a href="https://doi.org/10.1038/s41579-023-00878-2">https://doi.org/10.1038/s41579-023-00878-2</a></li>
-  <li id="Marotz2020">Marotz, C., et al. (2020). Microbial context predicts SARS-CoV-2 prevalence. <i>MedRxiv.</i> <a href="https://doi.org/10.1101/2020.11.19.20234229">https://doi.org/10.1101/2020.11.19.20234229</a></li>
-  <li id="mcdonald2012biom">McDonald, D., et al. (2012). The Biological Observation Matrix (BIOM) format. <i>Gigascience, 1(1),</i> 2047-217X.</li>
-  <li id="Patil2023">Patil, S., et al. (2023). Forecasting COVID-19 cases using Transformer models. <i>MedRxiv.</i> <a href="https://doi.org/10.1101/2023.11.02.23297976">https://doi.org/10.1101/2023.11.02.23297976</a></li>
-  <li id="sanabria2024dna">Sanabria, M., et al. (2024). DNA language model GROVER. <i>Nature Machine Intelligence, 6(8),</i> 911–923.</li>
-  <li id="Toloka">Toloka AI. (n.d.). History of LLMs. <a href="https://toloka.ai/blog/history-of-llms/">https://toloka.ai/blog/history-of-llms/</a></li>
-  <li id="Yeoh2021">Yeoh, Y. K., et al. (2021). Gut microbiota and COVID-19. <i>Gut, 70(4),</i> 698–706. <a href="https://doi.org/10.1136/gutjnl-2020-323020">https://doi.org/10.1136/gutjnl-2020-323020</a></li>
-  <li id="zhao2024finance">Zhao, H., et al. (2024). Revolutionizing Finance with LLMs. <a href="https://arxiv.org/abs/2401.11641">https://arxiv.org/abs/2401.11641</a></li>
-  <li id="zhou2023dnabert">Zhou, Z., et al. (2023). Dnabert-2: Efficient foundation model. <i>ArXiv Preprint.</i></li>
-  <li id="zvyagin2023genslms">Zvyagin, M., et al. (2023). GenSLMs: Genome-scale language models. <i>Int. J. High Perf. Comp. Apps, 37(6),</i> 683–705.</li>
+  <li class="ref" id="anibal2024omicron">Anibal, J. T., et al. (2024). Omicron detection with large language models and YouTube audio data. <i>MedRxiv.</i></li>
+  <li class="ref" id="banerjee2023llm">Banerjee, S., et al. (2023). Large language modeling and classical AI methods for the future of healthcare. <i>Journal of Medicine, Surgery, and Public Health, 1,</i> 100026. <a href="https://doi.org/10.1016/j.glmedi.2023.100026">https://doi.org/10.1016/j.glmedi.2023.100026</a></li>
+  <li class="ref" id="banik2024chatgpt">Banik, D., et al. (2024). Systematic exploration and in-depth analysis of ChatGPT architectures progression. <i>Artificial Intelligence Review, 57.</i> <a href="https://doi.org/10.1007/s10462-024-10832-0">https://doi.org/10.1007/s10462-024-10832-0</a></li>
+  <li class="ref" id="Bao2024">Bao, Z., et al. (2024). Predicting host health status through an integrated machine learning framework. <i>Scientific Reports, 14,</i> 31143. <a href="https://doi.org/10.1038/s41598-024-82418-3">https://doi.org/10.1038/s41598-024-82418-3</a></li>
+  <li class="ref" id="cantrell2025microbes">Cantrell, K. W. (2025). Attention All Microbes. <a href="https://github.com/kwcantrell/attention-all-microbes/tree/capstone-2025">GitHub Repository</a></li>
+  <li class="ref" id="CentersforDiseaseControlandPrevention_2024">Centers for Disease Control and Prevention. (2024, July). COVID-19 Timeline. <a href="https://www.cdc.gov/museum/timeline/covid19.html#">https://www.cdc.gov/museum/timeline/covid19.html#</a></li>
+  <li class="ref" id="devlin2018bert">Devlin, J., et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. <i>CoRR, abs/1810.04805.</i> <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a></li>
+  <li class="ref" id="Farhat2023">Farhat, F., et al. (2023). COVID-19 and beyond: leveraging AI for enhanced outbreak control. <i>Frontiers in Artificial Intelligence, 6,</i> 1266560. <a href="https://doi.org/10.3389/frai.2023.1266560">https://doi.org/10.3389/frai.2023.1266560</a></li>
+  <li class="ref" id="feng2025carbon">Feng, Z., et al. (2025). Implementing a universal carbon emissions prediction model. <i>Applied Energy, 383,</i> 125372. <a href="https://doi.org/10.1016/j.apenergy.2025.125372">https://doi.org/10.1016/j.apenergy.2025.125372</a></li>
+  <li class="ref" id="gonzalez2018qiita">Gonzalez, A., et al. (2018). Qiita: rapid, web-enabled microbiome meta-analysis. <i>Nature Methods, 15(10),</i> 796–798.</li>
+  <li class="ref" id="HernandezMedina2022">Hernández Medina, R., et al. (2022). Machine learning in microbiome research. <i>ISME Communications, 2,</i> 98. <a href="https://doi.org/10.1038/s43705-022-00182-9">https://doi.org/10.1038/s43705-022-00182-9</a></li>
+  <li class="ref" id="ji2021dnabert">Ji, Y., et al. (2021). DNABERT: pre-trained BERT for DNA-language in genome. <i>Bioinformatics, 37(15),</i> 2112–2120. <a href="https://doi.org/10.1093/bioinformatics/btab083">https://doi.org/10.1093/bioinformatics/btab083</a></li>
+  <li class="ref" id="liu2023chatgpt">Liu, Y., et al. (2023). Summary of ChatGPT-Related research. <i>Meta-Radiology, 1(2),</i> 100017. <a href="https://doi.org/10.1016/j.metrad.2023.100017">https://doi.org/10.1016/j.metrad.2023.100017</a></li>
+  <li class="ref" id="Markov2023">Markov, P. V., et al. (2023). The evolution of SARS-CoV-2. <i>Nature Reviews Microbiology, 21,</i> 361–379. <a href="https://doi.org/10.1038/s41579-023-00878-2">https://doi.org/10.1038/s41579-023-00878-2</a></li>
+  <li class="ref" id="Marotz2020">Marotz, C., et al. (2020). Microbial context predicts SARS-CoV-2 prevalence. <i>MedRxiv.</i> <a href="https://doi.org/10.1101/2020.11.19.20234229">https://doi.org/10.1101/2020.11.19.20234229</a></li>
+  <li class="ref" id="mcdonald2012biom">McDonald, D., et al. (2012). The Biological Observation Matrix (BIOM) format. <i>Gigascience, 1(1),</i> 2047-217X.</li>
+  <li class="ref" id="Patil2023">Patil, S., et al. (2023). Forecasting COVID-19 cases using Transformer models. <i>MedRxiv.</i> <a href="https://doi.org/10.1101/2023.11.02.23297976">https://doi.org/10.1101/2023.11.02.23297976</a></li>
+  <li class="ref" id="sanabria2024dna">Sanabria, M., et al. (2024). DNA language model GROVER. <i>Nature Machine Intelligence, 6(8),</i> 911–923.</li>
+  <li class="ref" id="Toloka">Toloka AI. (n.d.). History of LLMs. <a href="https://toloka.ai/blog/history-of-llms/">https://toloka.ai/blog/history-of-llms/</a></li>
+  <li class="ref" id="Yeoh2021">Yeoh, Y. K., et al. (2021). Gut microbiota and COVID-19. <i>Gut, 70(4),</i> 698–706. <a href="https://doi.org/10.1136/gutjnl-2020-323020">https://doi.org/10.1136/gutjnl-2020-323020</a></li>
+  <li class="ref" id="zhao2024finance">Zhao, H., et al. (2024). Revolutionizing Finance with LLMs. <a href="https://arxiv.org/abs/2401.11641">https://arxiv.org/abs/2401.11641</a></li>
+  <li class="ref" id="zhou2023dnabert">Zhou, Z., et al. (2023). Dnabert-2: Efficient foundation model. <i>ArXiv Preprint.</i></li>
+  <li class="ref" id="zvyagin2023genslms">Zvyagin, M., et al. (2023). GenSLMs: Genome-scale language models. <i>Int. J. High Perf. Comp. Apps, 37(6),</i> 683–705.</li>
 </ul>
 <br>
 
@@ -392,6 +392,10 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
 
     h2, h3, h4, h5, h6 {
         scroll-margin-top: 80px;
+    }
+
+    .ref{
+      scroll-margin-top: 80px;
     }
 
 </style>
