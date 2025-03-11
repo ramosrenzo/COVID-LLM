@@ -345,7 +345,8 @@ was assessed using (A) AUROC and (B) AUPRC.</p>
             visibility: visible; 
             right: 0px;
             transition: right 0.3s ease-in-out;
-            max-width: 100%
+            max-width: 100%;
+            overflow-y: auto;
         }
 
         #sidebar {
