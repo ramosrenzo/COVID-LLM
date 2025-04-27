@@ -14,6 +14,8 @@ from GROVER.training import train_model as train_model_grover
 from GROVER.test import test_model as test_model_grover
 from GROVER.plot_auroc_auprc import plot_auroc_auprc as plot_auroc_auprc_grover
 
+from figures.plot_auroc_auprc import plot_auroc_auprc
+
 import sys
 
 if __name__ == "__main__":
@@ -24,7 +26,7 @@ if __name__ == "__main__":
         model = sys.argv[1]
         target = sys.argv[2]
         
-        if model not in ['aam', 'dnabert', 'dnabert-2', 'grover']:
+        if model not in ['aam', 'dnabert', 'dnabert-2', 'grover', 'all']:
             raise Exception("Incorrect model name. Available models: 'aam', 'dnabert', 'dnabert-2', and 'grover'")
         elif target not in ['train', 'test', 'all']:
             raise Exception("Incorrect target name. Available targets: 'train', 'test', and 'all'")
@@ -81,6 +83,39 @@ if __name__ == "__main__":
                 stool_predictions = test_model_grover('data/input/test_metadata_stool.tsv', model_fp='trained_models_grover/stool/stool_best_model.keras')
                 nares_predictions = test_model_grover('data/input/test_metadata_nares.tsv', model_fp='trained_models_grover/nares/nares_best_model.keras')
                 plot_auroc_auprc_grover(nares_predictions, forehead_predictions, stool_predictions, inside_floor_predictions)
-    
+        
+        if model == 'all' and target == 'test':
+            # AAM
+            forehead_predictions_aam = test_model_aam('data/input/test_metadata_forehead.tsv', model_fp='trained_models_aam/forehead/forehead_best_model.keras')[0]
+            inside_floor_predictions_aam = test_model_aam('data/input/test_metadata_inside_floor.tsv', model_fp='trained_models_aam/inside_floor/inside_floor_best_model.keras')[0]
+            stool_predictions_aam = test_model_aam('data/input/test_metadata_stool.tsv', model_fp='trained_models_aam/stool/stool_best_model.keras')[0]
+            nares_predictions_aam = test_model_aam('data/input/test_metadata_nares.tsv', model_fp='trained_models_aam/nares/nares_best_model.keras')[0]
+
+            # DNABERT
+            forehead_predictions_dnabert = test_model_grover('data/input/test_metadata_forehead.tsv', model_fp='trained_models_dnabert/forehead/forehead_best_model.keras')[0]
+            inside_floor_predictions_dnabert = test_model_grover('data/input/test_metadata_inside_floor.tsv', model_fp='trained_models_dnabert/inside_floor/inside_floor_best_model.keras')[0]
+            stool_predictions_dnabert = test_model_grover('data/input/test_metadata_stool.tsv', model_fp='trained_models_dnabert/stool/stool_best_model.keras')[0]
+            nares_predictions_dnabert = test_model_grover('data/input/test_metadata_nares.tsv', model_fp='trained_models_dnabert/nares/nares_best_model.keras')[0]
+
+            # DNABERT-2
+            forehead_predictions_dnabert_2 = test_model_grover('data/input/test_metadata_forehead.tsv', model_fp='trained_models_dnabert_2/forehead/forehead_best_model.keras')[0]
+            inside_floor_predictions_dnabert_2 = test_model_grover('data/input/test_metadata_inside_floor.tsv', model_fp='trained_models_dnabert_2/inside_floor/inside_floor_best_model.keras')[0]
+            stool_predictions_dnabert_2 = test_model_grover('data/input/test_metadata_stool.tsv', model_fp='trained_models_dnabert_2/stool/stool_best_model.keras')[0]
+            nares_predictions_dnabert_2 = test_model_grover('data/input/test_metadata_nares.tsv', model_fp='trained_models_dnabert_2/nares/nares_best_model.keras')[0]
+
+            # GROVER
+            forehead_predictions_grover = test_model_grover('data/input/test_metadata_forehead.tsv', model_fp='trained_models_grover/forehead/forehead_best_model.keras')[0]
+            inside_floor_predictions_grover = test_model_grover('data/input/test_metadata_inside_floor.tsv', model_fp='trained_models_grover/inside_floor/inside_floor_best_model.keras')[0]
+            stool_predictions_grover = test_model_grover('data/input/test_metadata_stool.tsv', model_fp='trained_models_grover/stool/stool_best_model.keras')[0]
+            nares_predictions_grover = test_model_grover('data/input/test_metadata_nares.tsv', model_fp='trained_models_grover/nares/nares_best_model.keras')[0]
+            
+            # plot
+            plot_auroc_auprc({
+                'nares': [nares_predictions_aam, nares_predictions_dnabert, nares_predictions_dnabert_2, nares_predictions_grover],
+                'forehead': [forehead_predictions_aam, forehead_predictions_dnabert, forehead_predictions_dnabert_2, forehead_predictions_grover],
+                'stool': [stool_predictions_aam, stool_predictions_dnabert, stool_predictions_dnabert_2, stool_predictions_grover],
+                'inside_floor': [inside_floor_predictions_aam, inside_floor_predictions_dnabert, inside_floor_predictions_dnabert_2, inside_floor_predictions_grover]
+            })
+
     except Exception as e:
         print(f"An error occurred during the process: {e}")
