@@ -1,5 +1,5 @@
 # Assessing LLMs to Improve the Prediction of COVID-19 Status Using Microbiome Data
-Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status</a>
+Official website: <a href="https://ramosrenzo.github.io/COVID-LLM/">Assessing LLMs to Improve the Prediction of COVID-19 Status Using Microbiome Data</a>
 
 We evaluated the performance of four large language models (LLMs)—DNABERT, DNABERT-2, GROVER and AAM—in predicting COVID-19 status
 from microbiome data. These four models were chosen for their
@@ -84,6 +84,7 @@ python run_data.py <target-1> <target-2>
 
 ### Run Classifier
 The build script `run.py` handles training, testing, and plotting of AUROC and AUPRC scores for COVID-19 status classification ("Positive" or "Not detected"). Trained classifiers for each LLM are stored in their respective `trained_models_<LLM>` folder. Plots are stored in the `figures` folder. Use a target argument to specify which LLM's embeddings to use for classification:
+
 - `aam` - Uses AAM embeddings.
 
 - `dnabert` - Uses DNABERT embeddings.
@@ -91,14 +92,16 @@ The build script `run.py` handles training, testing, and plotting of AUROC and A
 - `dnabert-2` – Uses DNABERT-2 embeddings.
 
 - `grover` – Uses GROVER embeddings.
+  
+- `all` - Run with the 'test' target to generate AUROC and AUPRC scores for each model, grouped by sample environment.
 
 Use a second target argument to specify which stage of the pipeline to execute:
-
-- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the test target separately.
 
 - `train` – Runs the training process.
 
 - `test` – Runs the testing process and plots AUROC and AUPRC scores. If Git LFS is not installed, then training must be done locally before testing. 
+
+- `all` - Runs training, testing, and plotting. If your system runs out of memory during testing, consider running the test target separately.
 
 Run the build script with two targets:
 
